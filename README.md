@@ -1,7 +1,7 @@
 EBM-FrontendBackend
 ===================
 
-## API
+## API
 
 On manipule 2 ressources : `Articles` et `Paragraphs`.
 
