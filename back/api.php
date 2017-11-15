@@ -2,6 +2,12 @@
 
 header("Content-Type: application/json");
 
-$toto = explode("/", $path);
+$route = explode("/", $path);
 
-echo json_encode($toto);
+while ($route[0] !== "back") {
+    echo $route[0];
+    unset($route[0]);
+}
+unset($route[0]);
+
+echo json_encode($route);
