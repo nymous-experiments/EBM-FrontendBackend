@@ -46,6 +46,9 @@ On manipule 2 ressources : `Articles` et `Paragraphs`.
 }
 ```
 
+## Sources
+
+Système de routeur pour l'API REST : https://stackoverflow.com/questions/36675596/converting-a-very-simple-htaccess-into-a-php-router
 
 ## Auteurs
 
