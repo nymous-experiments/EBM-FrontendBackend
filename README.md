@@ -1,6 +1,11 @@
 EBM-FrontendBackend
 ===================
 
+## Prérequis 
+
+  - base de données mysql
+  - importer les données depuis [`seed.sql`](seed.sql)
+
 ## API
 
 On manipule 2 ressources : `Articles` et `Paragraphs`.
