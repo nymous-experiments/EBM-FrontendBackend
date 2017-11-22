@@ -5,7 +5,7 @@ CREATE TABLE np_articles
 (
   id    INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   title VARCHAR(255)    NOT NULL
-)
+);
 
 CREATE TABLE np_paragraphs
 (
@@ -14,4 +14,7 @@ CREATE TABLE np_paragraphs
   `order`    INT             NOT NULL,
   content    TEXT            NOT NULL,
   CONSTRAINT paragraphs_articles_id_fk FOREIGN KEY (article_id) REFERENCES np_articles (id)
-)
+);
+
+INSERT INTO ebm_newspaper.np_articles (title) VALUES ('My first article');
+INSERT INTO ebm_newspaper.np_articles (title) VALUES ('Another article');

@@ -1,10 +1,17 @@
 EBM-FrontendBackend
 ===================
 
-## Prérequis 
+## Installation 
 
-  - base de données mysql
-  - importer les données depuis [`seed.sql`](seed.sql)
+1. Créer une base de données MySQL
+2. Importer les données depuis [`seed.sql`](seed.sql)
+3. Ajuster les paramètres de connexion à la BDD dans le fichier [`config.php`](back/config.php)
+4. Lancer le serveur
+    - Sur un environnement Apache, le fichier `.htaccess` sert à router les requêtes vers le fichier `index.php`,
+    qui dispatche ensuite aux différents contrôleurs 
+    - Sur un environnement de développement avec le serveur PHP intégré, lancer avec la commande
+    `php -S 127.0.0.1:8080 back/index.php`, qui forcera le serveur PHP à ne charger que le fichier index.php
+    (mimant ainsi le comportement d'Apache)
 
 ## API
 
