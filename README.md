@@ -5,12 +5,14 @@ EBM-FrontendBackend
 
 1. Créer une base de données MySQL
 2. Importer les données depuis [`seed.sql`](seed.sql)
-3. Ajuster les paramètres de connexion à la BDD dans le fichier [`config.php`](back/config.php)
-4. Lancer le serveur
+3. Copier le fichier [`.env.example`](.env.example) en `.env` et ajuster les paramètres de connexion à la BDD
+(il est aussi possible de passer les paramètres grâce à des variables d'environnement, pour des hébergements comme Heroku)
+4. Installer [Composer](https://getcomposer.org/download/), et installer les dépendances (`php composer.phar install`)
+5. Lancer le serveur
     - Sur un environnement Apache, le fichier `.htaccess` sert à router les requêtes vers le fichier `index.php`,
     qui dispatche ensuite aux différents contrôleurs 
     - Sur un environnement de développement avec le serveur PHP intégré, lancer avec la commande
-    `php -S 127.0.0.1:8080 back/index.php`, qui forcera le serveur PHP à ne charger que le fichier index.php
+    `php -S 127.0.0.1:8080 index.php`, qui forcera le serveur PHP à ne charger que le fichier index.php
     (mimant ainsi le comportement d'Apache)
 
 ## API
