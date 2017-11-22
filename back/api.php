@@ -4,10 +4,16 @@ header("Content-Type: application/json");
 
 $route = explode("/", $path);
 
-while ($route[0] !== "back") {
-    echo $route[0];
-    unset($route[0]);
-}
-unset($route[0]);
+// Remove first empty cell
+array_shift($route);
 
-echo json_encode($route);
+switch ($route[0]) {
+    case "articles":
+        // Remove matched part of the route
+        array_shift($route);
+        include "Article.php";
+        break;
+    default:
+        include "400.php";
+        break;
+}
