@@ -19,8 +19,9 @@ switch ($route[0]) {
 
         // GET /articles/1
         if (!empty($route) && $route[0] !== "") { // If route ends with a trailing slash
-            if (is_numeric($route[0]) && (int)(+$route[0]) === +$route[0]) { // Check if id is an integer
-                $response = Article::getArticleById($db, $route[0]);
+            $id = $route[0];
+            if (is_numeric($id) && (int)(+$id) === +$id) { // Check if id is an integer
+                $response = Article::getArticleById($db, $id);
                 break;
             } else {
                 // Fall through to default case
