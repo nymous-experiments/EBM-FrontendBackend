@@ -1,2 +1,0 @@
-//Fonctions utilitaires php
-
