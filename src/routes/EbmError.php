@@ -1,7 +1,10 @@
 <?php
 
-class Error {
-    static function error400() {
+class EbmError
+{
+
+    static function error400()
+    {
         http_response_code(400);
 
         $error = [
@@ -10,5 +13,6 @@ class Error {
 
         return json_encode($error);
     }
+
 }
 
