@@ -7,7 +7,8 @@ $db = new Database();
 
 $route = explode("/", $path);
 // TODO Check if case when index.php isn't at the root URL is handled correctly
-// (eg. for Wamp installation, project is at http://localhost/folder_name/index.php and route is then "folder_name/index.php")
+// (eg. for Wamp installation, project is at http://localhost/folder_name/index.php
+// and route is then "folder_name/index.php")
 
 $script_name = explode("/", $_SERVER['SCRIPT_NAME']);
 $real_route = array_values(array_diff($route, $script_name));
@@ -20,7 +21,8 @@ switch ($real_route[0]) {
         require "routes/Article.php";
 
         // GET /articles/1
-        if (!empty($real_route) && $real_route[0] !== "") { // If route ends with a trailing slash, $real_route[0] ends with ""
+        // If route ends with a trailing slash, $real_route[0] ends with ""
+        if (!empty($real_route) && $real_route[0] !== "") {
             $id = $real_route[0];
             if (Utils::isInteger($id)) { // Check if id is an integer
                 $response = Article::getArticleById($db, $id);
@@ -33,6 +35,7 @@ switch ($real_route[0]) {
             $response = Article::getArticles($db);
             break;
         }
+    // no break
     default:
         require "routes/EbmError.php";
         $response = EbmError::error400();

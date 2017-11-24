@@ -3,7 +3,7 @@
 class EbmError
 {
 
-    static function error400()
+    public static function error400()
     {
         http_response_code(400);
 
@@ -13,6 +13,4 @@ class EbmError
 
         return json_encode($error);
     }
-
 }
-

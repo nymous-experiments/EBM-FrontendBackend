@@ -58,5 +58,4 @@ class Database
 
         return $res;
     }
-
 }

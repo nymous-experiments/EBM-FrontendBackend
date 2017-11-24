@@ -3,13 +3,13 @@
 class Article
 {
 
-    static function getArticles(Database $db)
+    public static function getArticles(Database $db)
     {
         $articles = $db->query("SELECT * FROM np_articles");
         return json_encode($articles);
     }
 
-    static function getArticleById(Database $db, int $id)
+    public static function getArticleById(Database $db, int $id)
     {
         $article = $db->prepare("SELECT * FROM np_articles WHERE id=?", [$id], true);
 
@@ -22,5 +22,4 @@ class Article
             return json_encode($error);
         }
     }
-
 }
