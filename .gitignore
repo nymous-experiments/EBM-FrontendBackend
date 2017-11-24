@@ -1,3 +1,9 @@
+### Custom ignore rules
+
+composer.phar
+/vendor/
+
+
 # Created by .ignore support plugin (hsz.mobi)
 ### NotepadPP template
 # Notepad++ backups #
@@ -185,5 +191,3 @@ typings/
 
 # dotenv environment variables file
 .env
-
-

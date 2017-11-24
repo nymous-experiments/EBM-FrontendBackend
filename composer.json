@@ -1,0 +1,29 @@
+{
+  "name": "nymous/ebm-frontend-backend",
+  "description": "Devoir final du module Frontend-Backend",
+  "type": "project",
+  "require": {
+    "ext-pdo_mysql": "*",
+    "vlucas/phpdotenv": "^2.4"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Thomas Gaudin",
+      "email": "thomas.gaudin@centraliens-lille.org",
+      "homepage": "https://github.com/nymous",
+      "role": "Developer"
+    },
+    {
+      "name": "William Joncquel",
+      "email": "williamjoncquel@hotmail.fr",
+      "role": "Developer"
+    }
+  ],
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.1"
+  },
+  "autoload": {
+    "psr-4": {"EBM\\": "src/"}
+  }
+}
