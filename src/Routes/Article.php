@@ -2,6 +2,8 @@
 
 namespace EBM\Routes;
 
+use EBM\Database;
+
 class Article
 {
 

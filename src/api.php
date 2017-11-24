@@ -5,7 +5,14 @@ namespace EBM;
 use EBM\Routes\Article;
 use EBM\Routes\Error;
 
-$db = new Database();
+$config = Config::getInstance(ROOT . "/config/config.php");
+
+$db = new Database(
+    $config->get("db_name"),
+    $config->get("db_host"),
+    $config->get("db_user"),
+    $config->get("db_password")
+);
 
 $route = explode("/", $path);
 // TODO Check if case when index.php isn't at the root URL is handled correctly

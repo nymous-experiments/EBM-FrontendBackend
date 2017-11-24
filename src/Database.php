@@ -2,7 +2,7 @@
 
 namespace EBM;
 
-require_once __DIR__ . "/../config.php";
+use \PDO;
 
 class Database
 {
@@ -12,12 +12,8 @@ class Database
      */
     private $pdo;
 
-    public function __construct()
+    public function __construct(string $db_name, string $db_host, string $db_user, string $db_password)
     {
-        global $db_name;
-        global $db_host;
-        global $db_user;
-        global $db_password;
         $this->pdo = new PDO("mysql:dbname=$db_name;host=$db_host", $db_user, $db_password);
     }
 
