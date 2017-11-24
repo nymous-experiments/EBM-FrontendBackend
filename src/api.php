@@ -1,7 +1,9 @@
 <?php
 
-require_once __DIR__ . "/Database.php";
-require_once __DIR__ . "/Utils.php";
+namespace EBM;
+
+use EBM\Routes\Article;
+use EBM\Routes\Error;
 
 $db = new Database();
 
@@ -17,8 +19,6 @@ switch ($real_route[0]) {
     case "articles":
         // Remove matched part of the route
         array_shift($real_route);
-
-        require "routes/Article.php";
 
         // GET /articles/1
         // If route ends with a trailing slash, $real_route[0] ends with ""
@@ -37,8 +37,7 @@ switch ($real_route[0]) {
         }
     // no break
     default:
-        require "routes/EbmError.php";
-        $response = EbmError::error400();
+        $response = Error::error400();
         break;
 }
 

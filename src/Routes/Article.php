@@ -1,5 +1,7 @@
 <?php
 
+namespace EBM\Routes;
+
 class Article
 {
 

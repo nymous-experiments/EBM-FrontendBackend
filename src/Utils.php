@@ -1,5 +1,7 @@
 <?php
 
+namespace EBM;
+
 class Utils
 {
 

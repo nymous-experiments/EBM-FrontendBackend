@@ -1,6 +1,8 @@
 <?php
 
-class EbmError
+namespace EBM\Routes;
+
+class Error
 {
 
     public static function error400()
