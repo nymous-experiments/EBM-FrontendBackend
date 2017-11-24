@@ -2,8 +2,10 @@
 
 use Dotenv\Dotenv;
 
-$dotenv = new Dotenv(ROOT);
-$dotenv->load();
+if (getenv('ENVIRONMENT' !== 'production')) {
+    $dotenv = new Dotenv(ROOT);
+    $dotenv->load();
+}
 
 return [
     "db_name" => getenv('DB_NAME'),
