@@ -1,6 +1,8 @@
 EBM-FrontendBackend
 ===================
 
+Le projet est déployé sur Heroku à cette adresse : https://warm-mesa-18064.herokuapp.com/
+
 ## Installation 
 
 1. Créer une base de données MySQL
