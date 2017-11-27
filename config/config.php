@@ -2,7 +2,7 @@
 
 use Dotenv\Dotenv;
 
-if (getenv('ENVIRONMENT' !== 'production')) {
+if (getenv('ENVIRONMENT') !== 'production') {
     $dotenv = new Dotenv(ROOT);
     $dotenv->load();
 }
