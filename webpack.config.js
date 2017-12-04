@@ -6,7 +6,16 @@ let config = {
     path: path.resolve('./public/dist'),
     filename: 'bundle.js'
   },
-  watch: true
+  watch: true,
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: ['babel-loader']
+      }
+    ]
+  }
 }
 
 module.exports = config
