@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack"
+    "dev": "cross-env NODE_ENV=development webpack",
+    "prod": "webpack"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,8 @@
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
+    "cross-env": "^5.1.1",
+    "uglifyjs-webpack-plugin": "^1.1.2",
     "webpack": "^3.10.0"
   },
   "dependencies": {
