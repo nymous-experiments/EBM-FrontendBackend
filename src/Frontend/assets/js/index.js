@@ -1,4 +1,5 @@
 import 'babel-polyfill'
+import css from '../scss/main.scss'
 
 let toto = 5
 

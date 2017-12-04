@@ -3,6 +3,22 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const dev = process.env.NODE_ENV === 'development'
 
+let cssLoaders = [
+  'style-loader',
+  {loader: 'css-loader', options: {importLoaders: 1}}
+]
+
+if (!dev) {
+  cssLoaders.push({
+    loader: 'postcss-loader',
+    options: {
+      plugins: (loader) => [
+        require('autoprefixer')(),
+      ]
+    }
+  })
+}
+
 let config = {
   entry: path.resolve('./src/Frontend/assets/js/index.js'),
   output: {
@@ -18,6 +34,19 @@ let config = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: ['babel-loader']
+      },
+      {
+        test: /\.css$/,
+        // Loaders are applied from right to left
+        use: cssLoaders
+      },
+      {
+        test: /\.scss$/,
+        // Loaders are applied from right to left
+        use: [
+          ...cssLoaders,
+          'sass-loader'
+        ]
       }
     ]
   },

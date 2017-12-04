@@ -11,15 +11,15 @@
     <orderEntry type="module-library">
       <library name="PHARS">
         <CLASSES>
-          <root url="phar://$MODULE_DIR$/composer.phar/" />
+          <root url="phar:///home/nymous/Documents/GitHub/EBM-FrontendBackend/composer.phar/" />
         </CLASSES>
         <SOURCES>
-          <root url="phar://$MODULE_DIR$/composer.phar/" />
+          <root url="phar:///home/nymous/Documents/GitHub/EBM-FrontendBackend/composer.phar/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="PHP" type="php">
+      <library name="PHP">
         <CLASSES>
           <root url="file://$MODULE_DIR$/vendor/composer" />
           <root url="file://$MODULE_DIR$/vendor/squizlabs/php_codesniffer" />
@@ -32,5 +32,6 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" name="@types/autoprefixer" level="application" />
   </component>
 </module>
