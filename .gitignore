@@ -2,7 +2,7 @@
 
 composer.phar
 /vendor/
-
+public/dist/
 
 # Created by .ignore support plugin (hsz.mobi)
 ### NotepadPP template

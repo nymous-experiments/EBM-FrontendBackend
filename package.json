@@ -1,0 +1,23 @@
+{
+  "name": "ebm-frontendbackend",
+  "version": "1.0.0",
+  "description": "Devoir final du module Frontend-Backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nymous-experiments/EBM-FrontendBackend.git"
+  },
+  "author": "Thomas Gaudin, William Joncquel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nymous-experiments/EBM-FrontendBackend/issues"
+  },
+  "homepage": "https://github.com/nymous-experiments/EBM-FrontendBackend#readme",
+  "devDependencies": {
+    "webpack": "^3.10.0"
+  }
+}
