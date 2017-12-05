@@ -1,11 +1,11 @@
 const path = require('path')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const dev = process.env.NODE_ENV === 'development'
 
 let cssLoaders = [
-  'style-loader',
-  {loader: 'css-loader', options: {importLoaders: 1}}
+  {loader: 'css-loader', options: {importLoaders: 1, minimize: !dev}}
 ]
 
 if (!dev) {
@@ -20,10 +20,12 @@ if (!dev) {
 }
 
 let config = {
-  entry: path.resolve('./src/Frontend/assets/js/index.js'),
+  entry: {
+    app: path.resolve('./src/Frontend/assets/js/index.js')
+  },
   output: {
     path: path.resolve('./public/dist'),
-    filename: 'bundle.js',
+    filename: '[name].js',
     publicPath: "/dist/"
   },
   watch: dev,
@@ -38,19 +40,27 @@ let config = {
       {
         test: /\.css$/,
         // Loaders are applied from right to left
-        use: cssLoaders
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: cssLoaders
+        })
       },
       {
         test: /\.scss$/,
         // Loaders are applied from right to left
-        use: [
-          ...cssLoaders,
-          'sass-loader'
-        ]
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [...cssLoaders, 'sass-loader']
+        })
       }
     ]
   },
-  plugins: []
+  plugins: [
+    new ExtractTextPlugin({
+      filename: '[name].css',
+      disable: dev
+    })
+  ]
 }
 
 if (!dev) {

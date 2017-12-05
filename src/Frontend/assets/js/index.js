@@ -1,5 +1,6 @@
 import 'babel-polyfill'
-import css from '../scss/main.scss'
+import mainCss from '../scss/main.scss'
+import testCss from '../scss/test.scss'
 
 let toto = 5
 
