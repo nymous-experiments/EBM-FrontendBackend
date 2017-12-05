@@ -2,7 +2,9 @@
 
 composer.phar
 /vendor/
-public/dist/
+# Ignore everything under public/, except the .gitkeep file
+public/*
+!public/.gitkeep
 
 # Created by .ignore support plugin (hsz.mobi)
 ### NotepadPP template

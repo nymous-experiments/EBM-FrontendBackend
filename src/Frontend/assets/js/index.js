@@ -1,8 +1,8 @@
 import 'babel-polyfill'
-import mainCss from '../scss/main.scss'
-import testCss from '../scss/test.scss'
 
 let toto = 5
+
+const x = 4
 
 let [b,,c] = [1, 2, 3, 4, 5]
 

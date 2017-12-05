@@ -1,6 +1,8 @@
 const path = require('path')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 const dev = process.env.NODE_ENV === 'development'
 
@@ -21,11 +23,11 @@ if (!dev) {
 
 let config = {
   entry: {
-    app: path.resolve('./src/Frontend/assets/js/index.js')
+    app: [path.resolve('./src/Frontend/assets/js/index.js'), path.resolve('./src/Frontend/assets/scss/main.scss')]
   },
   output: {
     path: path.resolve('./public/dist'),
-    filename: '[name].js',
+    filename: dev ? '[name].js' : '[name].[chunkhash:8].js',
     publicPath: "/dist/"
   },
   watch: dev,
@@ -57,7 +59,7 @@ let config = {
   },
   plugins: [
     new ExtractTextPlugin({
-      filename: '[name].css',
+      filename: dev ? '[name].css' : '[name].[contenthash:8].css',
       disable: dev
     })
   ]
@@ -66,6 +68,16 @@ let config = {
 if (!dev) {
   config.plugins.push(new UglifyJsPlugin({
     sourceMap: true
+  }))
+  config.plugins.push(new CleanWebpackPlugin(['dist'], {
+    root: path.resolve('./public'),
+    verbose: true,
+    dry: false
+  }))
+  config.plugins.push(new HtmlWebpackPlugin({
+    template: path.resolve('./src/Frontend/index.html'),
+    // Go back one folder because the output dir is dist/
+    filename: '../index.html'
   }))
 }
 

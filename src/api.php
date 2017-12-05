@@ -22,6 +22,8 @@ $route = explode("/", $path);
 $script_name = explode("/", $_SERVER['SCRIPT_NAME']);
 $real_route = array_values(array_diff($route, $script_name));
 
+array_shift($real_route); // Remove "api" from the route
+
 switch ($real_route[0]) {
     case "articles":
         // Remove matched part of the route

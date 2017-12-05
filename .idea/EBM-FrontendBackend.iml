@@ -33,5 +33,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="@types/autoprefixer" level="application" />
+    <orderEntry type="library" name="@types/extract-text-webpack-plugin" level="application" />
   </component>
 </module>
