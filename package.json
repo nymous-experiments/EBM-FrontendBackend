@@ -25,6 +25,10 @@
     "Firefox ESR"
   ],
   "devDependencies": {
+    "@types/autoprefixer": "^6.7.3",
+    "@types/extract-text-webpack-plugin": "^3.0.0",
+    "@types/html-webpack-plugin": "^2.30.1",
+    "@types/webpack": "^3.8.1",
     "autoprefixer": "^7.2.1",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
@@ -42,6 +46,7 @@
     "webpack": "^3.10.0"
   },
   "dependencies": {
-    "babel-polyfill": "^6.26.0"
+    "babel-polyfill": "^6.26.0",
+    "font-awesome": "^4.7.0"
   }
 }
