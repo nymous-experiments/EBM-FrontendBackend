@@ -54,6 +54,28 @@ let config = {
           fallback: 'style-loader',
           use: [...cssLoaders, 'sass-loader']
         })
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        loader: 'file-loader'
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              name: '[name].[hash:8].[ext]',
+              limit: 8192
+            }
+          },
+          {
+            loader: 'img-loader',
+            options: {
+              enabled: !dev
+            }
+          }
+        ]
       }
     ]
   },

@@ -79,6 +79,8 @@ Les dépendances frontend sont gérées par NPM/yarn.
 - Quelques inspirations de la [formation PHP Orienté Objet][Grafikart POO] de Grafikart (classe `Config`)
 - La configuration Webpack est grandement basée sur la [formation Webpack][Grafikart Webpack] de Grafikart
 
+Photo d'arrière plan par Raphael Koh sur [Unsplash](https://unsplash.com/photos/MzIiekUr6m8)
+
 ## Auteurs
 
 Thomas Gaudin & William Joncquel 
