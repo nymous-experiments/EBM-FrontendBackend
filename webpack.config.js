@@ -6,6 +6,11 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 const dev = process.env.NODE_ENV === 'development'
 
+const assetsPath = path.resolve('./src/Frontend/assets')
+const jsPath = path.resolve('./src/Frontend/assets/js')
+const scssPath = path.resolve('./src/Frontend/assets/scss')
+const imgPath = path.resolve('./src/Frontend/assets/img')
+
 let cssLoaders = [
   {loader: 'css-loader', options: {importLoaders: 1, minimize: !dev}}
 ]
@@ -23,12 +28,20 @@ if (!dev) {
 
 let config = {
   entry: {
-    app: [path.resolve('./src/Frontend/assets/js/index.js'), path.resolve('./src/Frontend/assets/scss/main.scss')]
+    app: [path.join(jsPath, 'index.js'), path.resolve(scssPath, 'main.scss')]
   },
   output: {
     path: path.resolve('./public/dist'),
     filename: dev ? '[name].js' : '[name].[chunkhash:8].js',
     publicPath: "/dist/"
+  },
+  resolve: {
+    alias: {
+      '@': assetsPath,
+      '@js': jsPath,
+      '@scss': scssPath,
+      '@img': imgPath
+    }
   },
   watch: dev,
   devtool: dev ? 'cheap-module-eval-source-map' : 'source-map',
