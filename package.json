@@ -20,8 +20,7 @@
   "homepage": "https://github.com/nymous-experiments/EBM-FrontendBackend#readme",
   "browserslist": [
     "last 2 versions",
-    "safari >= 7",
-    "ie >= 9",
+    "ie >= 11",
     "Firefox ESR"
   ],
   "devDependencies": {
