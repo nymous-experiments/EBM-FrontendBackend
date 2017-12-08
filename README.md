@@ -1,6 +1,8 @@
 EBM-FrontendBackend
 ===================
 
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
+
 Le projet est déployé sur Heroku à cette adresse : https://warm-mesa-18064.herokuapp.com/
 
 ## Installation 

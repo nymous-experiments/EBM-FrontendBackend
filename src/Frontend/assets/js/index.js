@@ -2,8 +2,12 @@
 
 let toto = 5
 
+console.log(toto)
+
 const x = 4
 
-let [b,,c] = [1, 2, 3, 4, 5]
+console.log(x)
 
-console.log(b)
+let [b,, c] = [1, 2, 3, 4, 5]
+
+console.log(b, c)
