@@ -2,14 +2,19 @@ const path = require('path')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 const dev = process.env.NODE_ENV === 'development'
 
-const assetsPath = path.resolve('./src/Frontend/assets')
-const jsPath = path.resolve('./src/Frontend/assets/js')
-const scssPath = path.resolve('./src/Frontend/assets/scss')
-const imgPath = path.resolve('./src/Frontend/assets/img')
+const srcPath = path.resolve('./src/Frontend')
+const assetsPath = path.resolve(srcPath, 'assets')
+const jsPath = path.resolve(assetsPath, 'js')
+const scssPath = path.resolve(assetsPath, 'scss')
+const imgPath = path.resolve(assetsPath, 'img')
+
+const publicPath = path.resolve('./public')
+const outputPath = path.resolve(publicPath, 'assets')
 
 let cssLoaders = [
   {loader: 'css-loader', options: {importLoaders: 1, minimize: !dev}}
@@ -31,9 +36,9 @@ let config = {
     app: [path.join(jsPath, 'index.js'), path.resolve(scssPath, 'main.scss')]
   },
   output: {
-    path: path.resolve('./public/dist'),
+    path: outputPath,
     filename: dev ? '[name].js' : '[name].[chunkhash:8].js',
-    publicPath: "/dist/"
+    publicPath: "/assets/"
   },
   resolve: {
     alias: {
@@ -44,6 +49,9 @@ let config = {
     }
   },
   watch: dev,
+  devServer: {
+    contentBase: publicPath
+  },
   devtool: dev ? 'cheap-module-eval-source-map' : 'source-map',
   module: {
     rules: [
@@ -102,23 +110,25 @@ let config = {
     new ExtractTextPlugin({
       filename: dev ? '[name].css' : '[name].[contenthash:8].css',
       disable: dev
-    })
+    }),
+    new HtmlWebpackPlugin({
+        template: path.join(srcPath, 'index.html'),
+        // Go back one folder because the output dir is assets/
+        filename: '../index.html',
+        alwaysWriteToDisk: true
+    }),
+      new HtmlWebpackHarddiskPlugin()
   ]
 }
 
 if (!dev) {
-  config.plugins.push(new UglifyJsPlugin({
+    config.plugins.push(new CleanWebpackPlugin(['assets'], {
+        root: publicPath,
+        verbose: true,
+        dry: false
+    }))
+    config.plugins.push(new UglifyJsPlugin({
     sourceMap: true
-  }))
-  config.plugins.push(new CleanWebpackPlugin(['dist'], {
-    root: path.resolve('./public'),
-    verbose: true,
-    dry: false
-  }))
-  config.plugins.push(new HtmlWebpackPlugin({
-    template: path.resolve('./src/Frontend/index.html'),
-    // Go back one folder because the output dir is dist/
-    filename: '../index.html'
   }))
 }
 
