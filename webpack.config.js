@@ -25,7 +25,7 @@ if (!dev) {
     loader: 'postcss-loader',
     options: {
       plugins: (loader) => [
-        require('autoprefixer')(),
+        require('autoprefixer')()
       ]
     }
   })
@@ -38,7 +38,7 @@ let config = {
   output: {
     path: outputPath,
     filename: dev ? '[name].js' : '[name].[chunkhash:8].js',
-    publicPath: "/assets/"
+    publicPath: '/assets/'
   },
   resolve: {
     alias: {
@@ -50,7 +50,11 @@ let config = {
   },
   watch: dev,
   devServer: {
-    contentBase: publicPath
+    contentBase: publicPath,
+    overlay: true,
+    proxy: {
+      '/api': 'http://localhost:8000'
+    }
   },
   devtool: dev ? 'cheap-module-eval-source-map' : 'source-map',
   module: {
@@ -112,22 +116,22 @@ let config = {
       disable: dev
     }),
     new HtmlWebpackPlugin({
-        template: path.join(srcPath, 'index.html'),
-        // Go back one folder because the output dir is assets/
-        filename: '../index.html',
-        alwaysWriteToDisk: true
+      template: path.join(srcPath, 'index.html'),
+      // Go back one folder because the output dir is assets/
+      filename: '../index.html',
+      alwaysWriteToDisk: true
     }),
-      new HtmlWebpackHarddiskPlugin()
+    new HtmlWebpackHarddiskPlugin()
   ]
 }
 
 if (!dev) {
-    config.plugins.push(new CleanWebpackPlugin(['assets'], {
-        root: publicPath,
-        verbose: true,
-        dry: false
-    }))
-    config.plugins.push(new UglifyJsPlugin({
+  config.plugins.push(new CleanWebpackPlugin(['assets'], {
+    root: publicPath,
+    verbose: true,
+    dry: false
+  }))
+  config.plugins.push(new UglifyJsPlugin({
     sourceMap: true
   }))
 }
