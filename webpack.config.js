@@ -21,14 +21,7 @@ let cssLoaders = [
 ]
 
 if (!dev) {
-  cssLoaders.push({
-    loader: 'postcss-loader',
-    options: {
-      plugins: (loader) => [
-        require('autoprefixer')()
-      ]
-    }
-  })
+  cssLoaders.push({loader: 'postcss-loader'})
 }
 
 let config = {
