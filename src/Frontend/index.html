@@ -1,12 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr" class="has-navbar-fixed-top">
 <head>
-    <meta charset="UTF-8">
-    <title>Articles</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Article Editor</title>
 </head>
 <body>
+<nav class="navbar is-fixed-top is-dark" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a href="/" class="navbar-item"><span class="has-text-weight-bold">Articles editor</span></a>
+    </div>
+    <div class="navbar-menu is-active">
+        <div class="navbar-start">
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a href="#" class="navbar-link">Select an article...</a>
 
-<h1>Articles</h1>
-
+                <div class="navbar-dropdown">
+                    <a href="#" class="navbar-item">This will be filled</a>
+                    <a href="#" class="navbar-item">with articles titles</a>
+                    <a href="#" class="navbar-item">downloaded from the server</a>
+                </div>
+            </div>
+        </div>
+        <div class="navbar-end">
+            <a href="https://github.com/nymous-experiments/EBM-FrontendBackend" class="navbar-item">
+                <span class="icon is-large"><i class="fa fa-2x fa-github"></i></span>
+            </a>
+        </div>
+    </div>
+</nav>
+<section class="section">
+    <div class="container">
+        <article class="message is-warning">
+            <div class="message-header">No article selected!</div>
+            <div class="message-body">
+                Please choose a title from the dropdown above...
+            </div>
+        </article>
+    </div>
+</section>
 </body>
 </html>
