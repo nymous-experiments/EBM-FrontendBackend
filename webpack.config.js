@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -127,6 +128,8 @@ if (!dev) {
   config.plugins.push(new UglifyJsPlugin({
     sourceMap: true
   }))
+} else {
+  config.plugins.push(new webpack.NamedModulesPlugin())
 }
 
 module.exports = config
