@@ -65,6 +65,10 @@ let config = {
         use: ['babel-loader']
       },
       {
+        test: /\.hbs$/,
+        use: ['handlebars-loader']
+      },
+      {
         test: /\.css$/,
         // Loaders are applied from right to left
         use: ExtractTextPlugin.extract({
@@ -110,7 +114,7 @@ let config = {
       disable: dev
     }),
     new HtmlWebpackPlugin({
-      template: path.join(srcPath, 'index.html'),
+      template: path.join(srcPath, 'index.hbs'),
       // Go back one folder because the output dir is assets/
       filename: '../index.html',
       alwaysWriteToDisk: true
