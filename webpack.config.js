@@ -13,6 +13,7 @@ const assetsPath = path.resolve(srcPath, 'assets')
 const jsPath = path.resolve(assetsPath, 'js')
 const scssPath = path.resolve(assetsPath, 'scss')
 const imgPath = path.resolve(assetsPath, 'img')
+const componentsPath = path.resolve(srcPath, 'components')
 
 const publicPath = path.resolve('./public')
 const outputPath = path.resolve(publicPath, 'assets')
@@ -39,7 +40,8 @@ let config = {
       '@': assetsPath,
       '@js': jsPath,
       '@scss': scssPath,
-      '@img': imgPath
+      '@img': imgPath,
+      '@components': componentsPath
     }
   },
   watch: dev,
