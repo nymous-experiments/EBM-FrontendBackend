@@ -4,3 +4,9 @@
 @import "~bulma/sass/layout/section";
 @import "~bulma/sass/elements/container";
 @import "~bulma/sass/components/message";
+@import "~bulma/sass/elements/title";
+@import "~bulma/sass/elements/content";
+
+#article-section {
+  display: none;
+}
