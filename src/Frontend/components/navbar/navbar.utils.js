@@ -13,7 +13,7 @@ export function setArticlesList (data) {
   navbarDropdown.empty()
   data.forEach((article) => {
     navbarDropdown.append(
-      $(`<a href="#" class="navbar-item">${article.title}</a>`)
+      $(`<a href="#" class="navbar-item" data-id="${article.id}">${article.title}</a>`)
     )
   })
 }
