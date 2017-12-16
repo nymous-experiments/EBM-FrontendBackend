@@ -1,11 +1,17 @@
 import $ from 'jquery'
 
 import {getArticle} from './article.service'
-import {SET_ARTICLE} from './article.events'
-import {articleSection} from './article.selectors'
+import {SET_ARTICLE} from './article.customEvents'
+import {hideArticle, hideNoArticleSelectedMessage, setArticle, showSpinner} from './article.utils'
+
+import {CLOSE_DROPDOWN} from '@components/navbar/navbar.customEvents'
 
 $(document).on(SET_ARTICLE, function (event, articleId) {
+  $(document).trigger(CLOSE_DROPDOWN)
+  hideNoArticleSelectedMessage()
+  hideArticle()
+  showSpinner()
   getArticle(articleId)
-    .then(console.log)
-  articleSection.show()
+    .then(setArticle)
+    .catch(console.err)
 })

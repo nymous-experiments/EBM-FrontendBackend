@@ -1,21 +1,22 @@
 import $ from 'jquery'
-import {getArticles} from './navbar.service'
-import {setArticlesList, showSpinner} from './navbar.utils'
-import {body, dropdownMenu, navbarDropdown} from './navbar.selectors'
-import {SET_ARTICLE} from '@components/article/article.events'
 
-const activeClass = 'is-active'
+import {getArticles} from './navbar.service'
+import {closeDropdown, isDropdownOpen, setArticlesList, showSpinner, toggleDropdown} from './navbar.utils'
+import {body, dropdownMenu, navbarDropdown} from './navbar.selectors'
+import {CLOSE_DROPDOWN} from './navbar.customEvents'
+
+import {SET_ARTICLE} from '@components/article/article.customEvents'
 
 dropdownMenu.click(function (event) {
   event.preventDefault()
   event.stopPropagation()
-  if (!$(this).hasClass(activeClass)) {
+  if (!isDropdownOpen()) {
     showSpinner()
     getArticles()
       .then(setArticlesList)
       .catch(console.error) // TODO
   }
-  $(this).toggleClass(activeClass)
+  toggleDropdown()
 })
 
 navbarDropdown.click(function (event) {
@@ -25,6 +26,12 @@ navbarDropdown.click(function (event) {
   $(document).trigger(SET_ARTICLE, articleId)
 })
 
+$(document).on(CLOSE_DROPDOWN, function (event) {
+  event.stopPropagation()
+  event.preventDefault()
+  closeDropdown()
+})
+
 body.click(function (event) {
-  dropdownMenu.removeClass(activeClass)
+  closeDropdown()
 })

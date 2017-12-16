@@ -1,7 +1,10 @@
 @import "~bulma/sass/utilities/_all";
 @import "~bulma/sass/base/_all";
 
+@import "~bulma/sass/utilities/mixins";
+
 @import "~bulma/sass/layout/section";
+@import "~bulma/sass/layout/hero";
 @import "~bulma/sass/elements/container";
 @import "~bulma/sass/components/message";
 @import "~bulma/sass/elements/title";
@@ -9,4 +12,20 @@
 
 #article-section {
   display: none;
+}
+
+#article-loading {
+  display: none;
+}
+
+#article-loading-spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#article-loading-spinner {
+  @include loader;
+  font-size: 10rem;
+  padding: 0.2em;
 }

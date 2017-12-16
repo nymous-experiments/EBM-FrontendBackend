@@ -1,6 +1,8 @@
 import $ from 'jquery'
 
-import {navbarDropdown} from './navbar.selectors'
+import {dropdownMenu, navbarDropdown} from './navbar.selectors'
+
+const activeClass = 'is-active'
 
 export function showSpinner () {
   navbarDropdown.empty()
@@ -16,4 +18,16 @@ export function setArticlesList (data) {
       $(`<a href="#" class="navbar-item" data-id="${article.id}">${article.title}</a>`)
     )
   })
+}
+
+export function isDropdownOpen () {
+  dropdownMenu.hasClass(activeClass)
+}
+
+export function closeDropdown () {
+  dropdownMenu.removeClass(activeClass)
+}
+
+export function toggleDropdown () {
+  dropdownMenu.toggleClass(activeClass)
 }
