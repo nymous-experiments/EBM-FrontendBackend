@@ -11,7 +11,7 @@ export function setArticle (article) {
   let paragraphs = []
   if (article.paragraphs) {
     article.paragraphs.forEach(paragraph => {
-      paragraph.push($(`<p class="article-paragraph">${paragraph.content}</p>`))
+      paragraphs.push($(`<p class="article-paragraph">${paragraph.content}</p>`))
     })
     articleParagraphsContainer.append(paragraphs)
   }
