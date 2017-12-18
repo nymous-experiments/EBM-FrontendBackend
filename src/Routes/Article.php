@@ -20,10 +20,9 @@ class Article
         // $article is false if the query returned nothing
         if ($article) {
             $paragraphs = $db->prepare("SELECT id, content FROM np_paragraphs WHERE article_id=? ORDER BY `order`", [$article->id]);
-            $article_with_paragraphs = ["article" => [
-                                            "id" => $article->id,
-                                            "title" => $article->title,
-                                            "paragraphs" => $paragraphs]];
+            $article_with_paragraphs = ["id" => $article->id,
+                                        "title" => $article->title,
+                                        "paragraphs" => $paragraphs];
             return json_encode($article_with_paragraphs);
         } else {
             http_response_code(404);
