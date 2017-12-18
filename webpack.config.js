@@ -129,7 +129,9 @@ let config = {
   ]
 }
 
-if (!dev) {
+if (dev) {
+  config.plugins.push(new webpack.NamedModulesPlugin())
+} else {
   config.plugins.push(new CleanWebpackPlugin(['assets'], {
     root: publicPath,
     verbose: true,
@@ -138,8 +140,6 @@ if (!dev) {
   config.plugins.push(new UglifyJsPlugin({
     sourceMap: true
   }))
-} else {
-  config.plugins.push(new webpack.NamedModulesPlugin())
 }
 
 module.exports = config
