@@ -1,6 +1,7 @@
 import $ from 'jquery'
 
-import {getArticles} from './navbar.service'
+import {listArticles} from '@services/article.service'
+
 import {closeDropdown, isDropdownOpen, setArticlesList, showSpinner, toggleDropdown} from './navbar.utils'
 import {body, dropdownMenu, navbarDropdown} from './navbar.selectors'
 import {CLOSE_DROPDOWN} from './navbar.customEvents'
@@ -12,7 +13,7 @@ dropdownMenu.click(function (event) {
   event.stopPropagation()
   if (!isDropdownOpen()) {
     showSpinner()
-    getArticles()
+    listArticles()
       .then(setArticlesList)
       .catch(console.error) // TODO
   }

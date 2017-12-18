@@ -1,6 +1,7 @@
 import $ from 'jquery'
 
-import {getArticle} from './article.service'
+import {getArticle} from '@services/article.service'
+
 import {SET_ARTICLE} from './article.customEvents'
 import {hideArticle, hideNoArticleSelectedMessage, setArticle, showSpinner} from './article.utils'
 
