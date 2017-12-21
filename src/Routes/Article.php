@@ -74,7 +74,7 @@ class Article
             return json_encode($error);
         }
     }
-    
+
     public static function updateArticleTitle($db, $title, $id)
     {
         $article = $db->prepare("UPDATE np_articles SET title=? WHERE id=?", [$title, $id]);
@@ -90,9 +90,20 @@ class Article
         }
     }
 
-    //Fonctions à créer :
+    public static function updateParagraphContent($db, $content, $id)
+{
+    $paragraph = $db->prepare("UPDATE np_paragraphs SET content=? WHERE id=?", [$content, $id]);
 
-    //public static function updateParagraphContent(){}
+    // $article is false if the query failed
+    if ($paragraph) {
+        $id=$db->lastInsertId();
+        return self::getParagraphById($db, $id);
+    } else {
+        http_response_code(404);
+        $error = ["error" => "Paragraph not updated"];
+        return json_encode($error);
+    }
+}
 
     //public static function updateParagraphOrder(){}
 }
