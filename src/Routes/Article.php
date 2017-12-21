@@ -74,4 +74,25 @@ class Article
             return json_encode($error);
         }
     }
+    
+    public static function updateArticleTitle($db, $title, $id)
+    {
+        $article = $db->prepare("UPDATE np_articles SET title=? WHERE id=?", [$title, $id]);
+
+        // $article is false if the query failed
+        if ($article) {
+            $id=$db->lastInsertId();
+            return self::getArticleById($db, $id);
+        } else {
+            http_response_code(404);
+            $error = ["error" => "Article not updated"];
+            return json_encode($error);
+        }
+    }
+
+    //Fonctions à créer :
+
+    //public static function updateParagraphContent(){}
+
+    //public static function updateParagraphOrder(){}
 }
