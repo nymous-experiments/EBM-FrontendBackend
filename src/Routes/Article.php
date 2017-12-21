@@ -94,7 +94,7 @@ class Article
 {
     $paragraph = $db->prepare("UPDATE np_paragraphs SET content=? WHERE id=?", [$content, $id]);
 
-    // $article is false if the query failed
+    // $paragraph is false if the query failed
     if ($paragraph) {
         $id=$db->lastInsertId();
         return self::getParagraphById($db, $id);
@@ -105,5 +105,43 @@ class Article
     }
 }
 
-    //public static function updateParagraphOrder(){}
+    public static function updateParagraphOrder($db, $new_order, $id){
+
+        //Requêtes à simplifier (deux en une) ?
+        $old_order = $db->prepare("SELECT `order` FROM np_paragraphs WHERE id=?", [$id]);
+        $article_id = $db->prepare("SELECT article_id FROM np_paragraphs WHERE id=?", [$id]);
+
+        //$old_order and $article_id are false if the query failed
+        if ($old_order && $article_id) {
+
+                if ($new_order > $old_order) {
+                    $paragraphs_to_move = $db->prepare("UPDATE np_paragraphs SET `order` = `order`-1 WHERE article_id=?
+                                                AND `order`>? AND `order`<=?", [$article_id, $old_order, $new_order]);
+                }
+
+                if ($new_order < $old_order) {
+                    $paragraphs_to_move = $db->prepare("UPDATE np_paragraphs SET `order` = `order`-1 WHERE article_id=?
+                                                AND `order`>=? AND `order`<?", [$article_id, $new_order, $old_order]);
+                }
+
+                else $paragraphs_to_move = false;
+
+                $paragraph = $db->prepare("UPDATE np_paragraphs SET `order`=? WHERE id=?", [$new_order, $id]);
+
+                //$paragraph and $paragraphs_to_move are false if the query failed
+                if ($paragraph && $paragraphs_to_move) {
+                    return self::getArticleById($db, $article_id);
+                } else {
+                    http_response_code(404);
+                    $error = ["error" => "Paragraph not updated"];
+                    return json_encode($error);
+                }
+
+        } else {
+            http_response_code(404);
+            $error = ["error" => "Paragraph not updated"];
+            return json_encode($error);
+        }
+
+    }
 }
