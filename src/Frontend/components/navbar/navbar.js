@@ -23,8 +23,11 @@ dropdownMenu.click(function (event) {
 navbarDropdown.click(function (event) {
   event.preventDefault()
   event.stopPropagation()
-  const articleId = event.target.dataset.id
-  $(document).trigger(SET_ARTICLE, articleId)
+  const target = $(event.target)
+  if (target.is('a')) {
+    const articleId = event.target.dataset.id
+    $(document).trigger(SET_ARTICLE, articleId)
+  }
 })
 
 $(document).on(CLOSE_DROPDOWN, function (event) {
