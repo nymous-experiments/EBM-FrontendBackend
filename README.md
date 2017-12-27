@@ -1,7 +1,10 @@
 EBM-FrontendBackend
 ===================
 
+[![license](https://img.shields.io/github/license/nymous-experiments/EBM-FrontendBackend.svg)](https://opensource.org/licenses/MIT)
+[![Uses Webpack](https://img.shields.io/badge/uses-webpack-blue.svg)](https://webpack.js.org)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
+[<img src="https://bulma.io/images/made-with-bulma.png" alt="Made with Bulma" width="106" height="20">](https://bulma.io)
 
 Le projet est déployé sur Heroku à cette adresse : https://warm-mesa-18064.herokuapp.com/
 
@@ -80,8 +83,6 @@ Les dépendances frontend sont gérées par NPM/yarn.
 - Système de routeur pour l'API REST : https://stackoverflow.com/questions/36675596/converting-a-very-simple-htaccess-into-a-php-router
 - Quelques inspirations de la [formation PHP Orienté Objet][Grafikart POO] de Grafikart (classe `Config`)
 - La configuration Webpack est grandement basée sur la [formation Webpack][Grafikart Webpack] de Grafikart
-
-Photo d'arrière plan par Raphael Koh sur [Unsplash](https://unsplash.com/photos/MzIiekUr6m8)
 
 ## Auteurs
 
