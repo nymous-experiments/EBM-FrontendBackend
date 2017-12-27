@@ -24,6 +24,7 @@ articleParagraphsContainer.click(function (event) {
   if (target.is('p')) {
     const metadata = target.data('metadata')
     const textarea = $(`<textarea class="textarea article-paragraph"></textarea>`).val(metadata.content)
+    textarea.data('previousMetadata', metadata)
     const toInsert = $(`<div></div>`).html(textarea)
     target.replaceWith(toInsert)
   }
