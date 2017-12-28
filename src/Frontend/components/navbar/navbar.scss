@@ -1,0 +1,22 @@
+$fa-font-path: "~font-awesome/fonts" !default;
+@import "~font-awesome/scss/font-awesome";
+
+@import "~bulma/sass/utilities/_all";
+@import "~bulma/sass/base/_all";
+@import "~bulma/sass/utilities/mixins";
+
+@import "~bulma/sass/components/navbar";
+@import "~bulma/sass/elements/button";
+
+.custom-spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5em;
+}
+
+.custom-spinner {
+  @include loader;
+  font-size: 2em;
+  padding: 0.2em;
+}

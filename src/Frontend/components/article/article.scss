@@ -1,0 +1,43 @@
+@import "~bulma/sass/utilities/_all";
+@import "~bulma/sass/base/_all";
+
+@import "~bulma/sass/utilities/mixins";
+
+@import "~bulma/sass/layout/section";
+@import "~bulma/sass/layout/hero";
+@import "~bulma/sass/elements/container";
+@import "~bulma/sass/elements/form";
+@import "~bulma/sass/components/message";
+@import "~bulma/sass/elements/title";
+@import "~bulma/sass/elements/content";
+
+#article-section {
+  display: none;
+}
+
+#article-loading {
+  display: none;
+}
+
+#article-loading-spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#article-loading-spinner {
+  @include loader;
+  font-size: 10rem;
+  padding: 0.2em;
+}
+
+.article-paragraph {
+  padding: 1em;
+  margin: 0.5em;
+  background: #fbfbfb;
+  border-radius: 6px;
+}
+
+.textarea {
+  padding: 1em;
+}
