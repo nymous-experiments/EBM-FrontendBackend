@@ -45,7 +45,7 @@ class Article
         }
     }
 
-    public static function createArticle($db, $title)
+    public static function createArticle(Database $db, string $title)
     {
         $article = $db->prepare("INSERT INTO np_articles SET title=?", [$title]);
 
@@ -60,7 +60,7 @@ class Article
         }
     }
 
-    public static function createParagraph($db, $article_id, $content)
+    public static function createParagraph(Database $db, int $article_id, string $content)
     {
         $paragraph = $db->prepare("INSERT INTO np_paragraphs SET article_id=? content=?", [$article_id, $content]);
 
@@ -75,7 +75,7 @@ class Article
         }
     }
 
-    public static function updateArticleTitle($db, $article_id, $title)
+    public static function updateArticleTitle(Database $db, int $article_id, string $title)
     {
         $article = $db->prepare("UPDATE np_articles SET title=? WHERE id=?", [$title, $article_id]);
 
@@ -90,7 +90,7 @@ class Article
         }
     }
 
-    public static function updateParagraphContent($db, $paragraph_id, $content)
+    public static function updateParagraphContent(Database $db, int $paragraph_id, string $content)
 {
     $paragraph = $db->prepare("UPDATE np_paragraphs SET content=? WHERE id=?", [$content, $paragraph_id]);
 
@@ -105,9 +105,9 @@ class Article
     }
 }
 
-    public static function updateParagraphOrder($db, $paragraph_id, $new_order){
+    public static function updateParagraphOrder(Database $db, int $paragraph_id, int $new_order){
 
-        //Requêtes à simplifier (deux en une) ?
+        //TODO Requêtes à simplifier (deux en une) ?
         $old_order = $db->prepare("SELECT `order` FROM np_paragraphs WHERE id=?", [$paragraph_id]);
         $article_id = $db->prepare("SELECT article_id FROM np_paragraphs WHERE id=?", [$paragraph_id]);
 
@@ -118,12 +118,10 @@ class Article
                     $paragraphs_to_move = $db->prepare("UPDATE np_paragraphs SET `order` = `order`-1 WHERE article_id=?
                                                 AND `order`>? AND `order`<=?", [$article_id, $old_order, $new_order]);
                 }
-
-                if ($new_order < $old_order) {
+                else if ($new_order < $old_order) {
                     $paragraphs_to_move = $db->prepare("UPDATE np_paragraphs SET `order` = `order`+1 WHERE article_id=?
                                                 AND `order`>=? AND `order`<?", [$article_id, $new_order, $old_order]);
                 }
-
                 else $paragraphs_to_move = false;
 
                 $paragraph = $db->prepare("UPDATE np_paragraphs SET `order`=? WHERE id=?", [$new_order, $paragraph_id]);

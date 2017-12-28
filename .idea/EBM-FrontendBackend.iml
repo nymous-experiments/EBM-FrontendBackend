@@ -10,16 +10,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
-      <library name="PHARS">
-        <CLASSES>
-          <root url="phar:///home/nymous/Documents/GitHub/EBM-FrontendBackend/composer.phar/" />
-        </CLASSES>
-        <SOURCES>
-          <root url="phar:///home/nymous/Documents/GitHub/EBM-FrontendBackend/composer.phar/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library name="PHP">
         <CLASSES>
           <root url="file://$MODULE_DIR$/vendor/composer" />
