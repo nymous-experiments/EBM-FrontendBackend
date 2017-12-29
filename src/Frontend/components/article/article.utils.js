@@ -68,10 +68,10 @@ export function handleParagraphKeydown (event) {
     const thisTextarea = $(event.target)
     const newContent = thisTextarea.val()
     const newMetadata = Object.assign({}, thisTextarea.data('previousMetadata'), {content: newContent})
-    const paragraphToReplace = $(`<p class="article-paragraph" data-order="${newMetadata.order}">${newContent}</p>`)
+    const paragraphToReplace = $(`<p class="article-paragraph">${newContent}</p>`)
     paragraphToReplace.data('metadata', newMetadata)
     setParagraphContent(newMetadata.id, newContent)
-      .then(() => thisTextarea.replaceWith(paragraphToReplace))
+      .then(() => thisTextarea.parent().replaceWith(paragraphToReplace)) // Replace the wrapping div
       .catch(err => console.error(err)) // TODO Handle error
   }
 }
