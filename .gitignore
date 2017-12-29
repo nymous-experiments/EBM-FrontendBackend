@@ -5,6 +5,7 @@ composer.phar
 # Ignore everything under public/, except the .gitkeep file
 public/*
 !public/.gitkeep
+.idea/httpRequests/
 
 # Created by .ignore support plugin (hsz.mobi)
 ### NotepadPP template

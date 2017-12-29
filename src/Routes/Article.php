@@ -41,7 +41,7 @@ class Article
 
     public static function getParagraphById(Database $db, int $paragraph_id)
     {
-        $paragraph = $db->prepare("SELECT id, content FROM np_paragraphs WHERE id=?", [$paragraph_id], true);
+        $paragraph = $db->prepare("SELECT id, content, `order` FROM np_paragraphs WHERE id=?", [$paragraph_id], true);
 
         // $paragraph is false if the query returned nothing
         if ($paragraph) {
@@ -60,6 +60,7 @@ class Article
         // $article is false if the query failed
         if ($article) {
             $id = $db->lastInsertId();
+            http_response_code(201);
             return self::getArticleById($db, $id);
         } else {
             http_response_code(404);
@@ -75,6 +76,7 @@ class Article
         // $paragraph is false if the query failed
         if ($paragraph) {
             $id = $db->lastInsertId();
+            http_response_code(201);
             return self::getParagraphById($db, $id);
         } else {
             http_response_code(404);
@@ -107,8 +109,7 @@ class Article
 
         // $paragraph is false if the query failed
         if ($paragraph) {
-            $id = $db->lastInsertId();
-            return self::getParagraphById($db, $id);
+            return self::getParagraphById($db, $paragraph_id);
         } else {
             http_response_code(404);
             $error = ["error" => "Paragraph not updated"];
@@ -120,11 +121,13 @@ class Article
     {
 
         //TODO Requêtes à simplifier (deux en une) ?
-        $old_order = $db->prepare("SELECT `order` FROM np_paragraphs WHERE id=?", [$paragraph_id]);
-        $article_id = $db->prepare("SELECT article_id FROM np_paragraphs WHERE id=?", [$paragraph_id]);
+        $old_order = $db->prepare("SELECT `order` FROM np_paragraphs WHERE id=?", [$paragraph_id], true);
+        $article_id = $db->prepare("SELECT article_id FROM np_paragraphs WHERE id=?", [$paragraph_id], true);
 
         //$old_order and $article_id are false if the query failed
         if ($old_order && $article_id) {
+            $old_order = (int)$old_order->order;
+            $article_id = (int)$article_id->article_id;
             if ($new_order > $old_order) {
                 $paragraphs_to_move = $db->prepare(
                     "UPDATE np_paragraphs
