@@ -151,8 +151,8 @@ class Article
 
         // $paragraph is false if the query failed
         if ($paragraph) {
-            $id=$db->lastInsertId();
-            return self::getArticleById($db, $id);
+            http_response_code(204);
+            return "";
         } else {
             http_response_code(404);
             $error = ["error" => "Paragraph not deleted"];
@@ -167,8 +167,8 @@ class Article
 
         // $paragraphs and $article are false if the queries failed
         if ($paragraphs && $article) {
-            $id=$db->lastInsertId();
-            return self::getArticleById($db, $id);
+            http_response_code(204);
+            return "";
         } else {
             http_response_code(404);
             $error = ["error" => "Article not deleted"];
