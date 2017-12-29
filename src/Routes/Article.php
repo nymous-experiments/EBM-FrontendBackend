@@ -20,7 +20,7 @@ class Article
         // $article is false if the query returned nothing
         if ($article) {
             $paragraphs = $db->prepare(
-                "SELECT id, content
+                "SELECT id, content, `order`
                 FROM np_paragraphs
                 WHERE article_id=?
                 ORDER BY `order`",
