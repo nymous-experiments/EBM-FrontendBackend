@@ -14,7 +14,7 @@ $db = new Database(
     $config->get("db_password")
 );
 
-$route = explode("/", $path);
+$route = explode("/", trim($path, '/')); // Trim the trailing slash
 // TODO Check if case when index.php isn't at the root URL is handled correctly
 // (eg. for Wamp installation, project is at http://localhost/folder_name/index.php
 // and route is then "folder_name/index.php")
@@ -29,23 +29,54 @@ switch ($real_route[0]) {
         // Remove matched part of the route
         array_shift($real_route);
 
-        // GET /articles/1
-        // If route ends with a trailing slash, $real_route[0] ends with ""
-        if (!empty($real_route) && $real_route[0] !== "") {
-            $id = $real_route[0];
-            if (Utils::isInteger($id)) { // Check if id is an integer
-                $response = Article::getArticleById($db, $id);
-                break;
+        if (!empty($real_route)) {
+            $articleId = $real_route[0];
+            if (Utils::isInteger($articleId)) { // Check if id is an integer
+                array_shift($real_route);
+                if (!empty($real_route)) {
+                    if ($real_route[0] === "paragraphs") {
+                        // /articles/1/paragraphs
+                        switch ($_SERVER["REQUEST_METHOD"]) {
+                            // POST /articles/1/paragraphs
+                            case "POST":
+                                $body = Utils::parseRequestBody();
+                                if (is_null($body) || !property_exists($body, "content")) {
+                                    $response = Error::badBody();
+                                    break 2; // Break from outer switch/case (2 levels)
+                                }
+                                $response = Article::createParagraph($db, $articleId, $body->content);
+                                break 2;
+                        }
+                    }
+                } else {
+                    // /articles/1
+                    switch ($_SERVER["REQUEST_METHOD"]) {
+                        // GET /articles/1
+                        case "GET":
+                            $response = Article::getArticleById($db, $articleId);
+                            break 2;
+                        // PATCH /articles/1
+                        case "PATCH":
+                            $body = Utils::parseRequestBody();
+                            if (is_null($body) || !property_exists($body, "title")) {
+                                $response = Error::badBody();
+                                break 2;
+                            }
+                            $response = Article::updateArticleTitle($db, $articleId, $body->title);
+                            break 2;
+                    }
+                }
             } else {
                 $response = Error::wrongQuery();
                 break;
             }
         } else {
+            // /articles
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case "GET":
                     // GET /articles
                     $response = Article::getArticles($db);
-                    break 2; // Break from outer switch/case
+                    break 2;
                 case "POST":
                     // POST /articles
                     $body = Utils::parseRequestBody();
@@ -54,7 +85,7 @@ switch ($real_route[0]) {
                         break 2;
                     }
                     $response = Article::createArticle($db, $body->title);
-                    break 2; // Break from outer switch/case
+                    break 2;
             }
         }
     // no break
@@ -62,28 +93,36 @@ switch ($real_route[0]) {
         // Remove matched part of the route
         array_shift($real_route);
 
-        // If route ends with a trailing slash, $real_route[0] ends with ""
-        if (!empty($real_route) && $real_route[0] !== "") {
-            $id = $real_route[0];
-            if (Utils::isInteger($id)) { // Check if id is an integer
+        if (!empty($real_route)) {
+            $paragraphId = $real_route[0];
+            if (Utils::isInteger($paragraphId)) { // Check if id is an integer
+                // /paragraphs/1
                 switch ($_SERVER["REQUEST_METHOD"]) {
                     // GET /paragraphs/1
                     case "GET":
-                        $response = Article::getParagraphById($db, $id);
+                        $response = Article::getParagraphById($db, $paragraphId);
                         break 2;
                     // PATCH /paragraphs/1
                     case "PATCH":
                         $body = Utils::parseRequestBody();
-                        if (is_null($body) || !property_exists($body, "content")) {
+                        if (is_null($body) || (property_exists($body, "content") && property_exists($body, "order"))) {
+                            $response = Error::badBody();
+                            break 2;
+                        } elseif (property_exists($body, "content")) {
+                            $response = Article::updateParagraphContent($db, $paragraphId, $body->content);
+                            break 2;
+                        } elseif (property_exists($body, "order")) {
+                            $response = Article::updateParagraphOrder($db, $paragraphId, $body->order);
+                            break 2;
+                        }
+                        else {
                             $response = Error::badBody();
                             break 2;
                         }
-                        $response = Article::updateParagraphContent($db, $id, $body->content);
-                        break 2; // Break from outer switch/case
                 }
             }
         }
-        // no break
+    // no break
     default:
         $response = Error::wrongQuery();
         break;
