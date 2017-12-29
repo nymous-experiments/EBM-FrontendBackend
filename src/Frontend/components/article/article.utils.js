@@ -78,8 +78,19 @@ export function handleParagraphKeydown (event) {
 
 export function resetTitle () {
   if (articleTitle.children().length > 0) { // The title has an input inside
-    console.log('resetTitle')
     const metadata = articleTitle.data('metadata')
     articleTitle.html(metadata.title)
   }
+}
+
+export function resetParagraphs () {
+  articleParagraphsContainer.children().each(function () {
+    const paragraph = $(this)
+    if (paragraph.is('div')) { // Paragraph is being edited
+      const metadata = paragraph.children().data('previousMetadata')
+      const paragraphToReplace = $(`<p class="article-paragraph">${metadata.content}</p>`)
+      paragraphToReplace.data('metadata', metadata)
+      paragraph.replaceWith(paragraphToReplace)
+    }
+  })
 }

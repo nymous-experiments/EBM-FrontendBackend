@@ -4,8 +4,8 @@ import {getArticle} from '@services/article.service'
 
 import {SET_ARTICLE} from './article.customEvents'
 import {
-  handleParagraphKeydown, handleTitleKeydown, hideArticle, hideNoArticleSelectedMessage, resetTitle, setArticle,
-  showSpinner
+  handleParagraphKeydown, handleTitleKeydown, hideArticle, hideNoArticleSelectedMessage, resetParagraphs,
+  resetTitle, setArticle, showSpinner
 } from './article.utils'
 import {articleParagraphsContainer, articleTitle} from './article.selectors'
 
@@ -22,6 +22,7 @@ $(document).keydown(function (event) {
   if (event.which === 27) { // Escape
     event.preventDefault()
     resetTitle()
+    resetParagraphs()
   }
 })
 
