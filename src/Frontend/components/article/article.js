@@ -39,5 +39,7 @@ articleParagraphsContainer.click(function (event) {
 
     const toInsert = $(`<div></div>`).html(textarea)
     target.replaceWith(toInsert)
+
+    textarea.focus()
   }
 })
