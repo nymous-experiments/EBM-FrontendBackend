@@ -41,7 +41,7 @@ class Article
 
     public static function getParagraphById(Database $db, int $paragraph_id)
     {
-        $paragraph = $db->prepare("SELECT id, content FROM np_paragraphs WHERE id=?", [$paragraph_id], true);
+        $paragraph = $db->prepare("SELECT id, content, `order` FROM np_paragraphs WHERE id=?", [$paragraph_id], true);
 
         // $paragraph is false if the query returned nothing
         if ($paragraph) {
