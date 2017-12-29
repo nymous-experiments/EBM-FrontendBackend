@@ -4,7 +4,7 @@ import {getArticle} from '@services/article.service'
 
 import {SET_ARTICLE} from './article.customEvents'
 import {
-  handleParagraphKeydown, handleTitleKeydown, hideArticle, hideNoArticleSelectedMessage, setArticle,
+  handleParagraphKeydown, handleTitleKeydown, hideArticle, hideNoArticleSelectedMessage, resetTitle, setArticle,
   showSpinner
 } from './article.utils'
 import {articleParagraphsContainer, articleTitle} from './article.selectors'
@@ -16,6 +16,13 @@ $(document).on(SET_ARTICLE, function (event, articleId) {
   getArticle(articleId)
     .then(setArticle)
     .catch(console.err)
+})
+
+$(document).keydown(function (event) {
+  if (event.which === 27) { // Escape
+    event.preventDefault()
+    resetTitle()
+  }
 })
 
 articleTitle.click(function (event) {

@@ -75,3 +75,11 @@ export function handleParagraphKeydown (event) {
       .catch(err => console.error(err)) // TODO Handle error
   }
 }
+
+export function resetTitle () {
+  if (articleTitle.children().length > 0) { // The title has an input inside
+    console.log('resetTitle')
+    const metadata = articleTitle.data('metadata')
+    articleTitle.html(metadata.title)
+  }
+}
