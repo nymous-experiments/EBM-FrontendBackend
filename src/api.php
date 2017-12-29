@@ -37,16 +37,55 @@ switch ($real_route[0]) {
                 $response = Article::getArticleById($db, $id);
                 break;
             } else {
-                // Fall through to default case
+                $response = Error::wrongQuery();
+                break;
             }
         } else {
-            // GET /articles/
-            $response = Article::getArticles($db);
-            break;
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case "GET":
+                    // GET /articles
+                    $response = Article::getArticles($db);
+                    break 2; // Break from outer switch/case
+                case "POST":
+                    // POST /articles
+                    $body = Utils::parseRequestBody();
+                    if (is_null($body) || !property_exists($body, "title")) {
+                        $response = Error::badBody();
+                        break 2;
+                    }
+                    $response = Article::createArticle($db, $body->title);
+                    break 2; // Break from outer switch/case
+            }
         }
     // no break
+    case "paragraphs":
+        // Remove matched part of the route
+        array_shift($real_route);
+
+        // If route ends with a trailing slash, $real_route[0] ends with ""
+        if (!empty($real_route) && $real_route[0] !== "") {
+            $id = $real_route[0];
+            if (Utils::isInteger($id)) { // Check if id is an integer
+                switch ($_SERVER["REQUEST_METHOD"]) {
+                    // GET /paragraphs/1
+                    case "GET":
+                        $response = Article::getParagraphById($db, $id);
+                        break 2;
+                    // PATCH /paragraphs/1
+                    case "PATCH":
+                        $body = Utils::parseRequestBody();
+                        if (is_null($body) || !property_exists($body, "content")) {
+                            $response = Error::badBody();
+                            break 2;
+                        }
+                        $response = Article::updateParagraphContent($db, $id, $body->content);
+                        break 2; // Break from outer switch/case
+                }
+            }
+        }
+        // no break
     default:
-        $response = Error::error400();
+        $response = Error::wrongQuery();
         break;
 }
 

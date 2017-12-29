@@ -20,4 +20,13 @@ class Utils
     {
         return (is_numeric($value) && (int)(+$value) === +$value);
     }
+
+    /**
+     * Get HTTP request body, and parse it as JSON
+     * @return mixed the body parsed as JSON, or <b>NULL</b> if it cannot be decoded
+     */
+    public static function parseRequestBody()
+    {
+        return json_decode(file_get_contents("php://input"));
+    }
 }
