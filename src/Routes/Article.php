@@ -144,4 +144,36 @@ class Article
         }
 
     }
+
+    public static function deleteParagraph($db, $paragraph_id){
+
+        $paragraph = $db->prepare("DELETE FROM np_paragraphs WHERE id=?", [$paragraph_id]);
+
+        // $paragraph is false if the query failed
+        if ($paragraph) {
+            $id=$db->lastInsertId();
+            return self::getArticleById($db, $id);
+        } else {
+            http_response_code(404);
+            $error = ["error" => "Paragraph not deleted"];
+            return json_encode($error);
+        }
+    }
+
+    public static function deleteArticle($db, $article_id){
+
+        $paragraphs = $db->prepare("DELETE FROM np_paragraphs WHERE article_id=?", [$article_id]);
+        $article = $db->prepare("DELETE FROM np_articles WHERE id=?", [$article_id]);
+
+        // $paragraphs and $article are false if the queries failed
+        if ($paragraphs && $article) {
+            $id=$db->lastInsertId();
+            return self::getArticleById($db, $id);
+        } else {
+            http_response_code(404);
+            $error = ["error" => "Article not deleted"];
+            return json_encode($error);
+        }
+
+    }
 }
