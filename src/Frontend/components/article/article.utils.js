@@ -56,10 +56,9 @@ export function handleTitleKeydown (event) {
     const thisTextinput = $(event.target)
     const newTitle = thisTextinput.val()
     const newMetadata = Object.assign({}, thisTextinput.data('previousMetadata'), {title: newTitle})
-    const titleToReplace = $(`<h1 class="title">${newTitle}</h1>`)
-    titleToReplace.data('metadata', newMetadata)
+    articleTitle.data('metadata', newMetadata)
     setArticleTitle(newMetadata.id, newTitle)
-      .then(() => thisTextinput.replaceWith(titleToReplace))
+      .then(() => articleTitle.html(newTitle))
       .catch(err => console.error(err)) // TODO Handle error
   }
 }
