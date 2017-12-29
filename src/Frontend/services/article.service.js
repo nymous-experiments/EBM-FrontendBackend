@@ -14,6 +14,7 @@ export function listArticles () {
 
 /**
  * Get an article from API
+ * @param articleId {int} Article ID
  * @return {Promise<any>}
  */
 export function getArticle (articleId) {

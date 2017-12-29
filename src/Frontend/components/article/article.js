@@ -1,6 +1,7 @@
 import $ from 'jquery'
 
 import {getArticle} from '@services/article.service'
+import {setParagraphContent} from '@services/paragraphs.service'
 
 import {SET_ARTICLE} from './article.customEvents'
 import {hideArticle, hideNoArticleSelectedMessage, setArticle, showSpinner} from './article.utils'
@@ -33,7 +34,9 @@ articleParagraphsContainer.click(function (event) {
         const newMetadata = Object.assign({}, thisTextarea.data('previousMetadata'), {content: newContent})
         const paragraphToReplace = $(`<p class="article-paragraph" data-order="${newMetadata.order}">${newContent}</p>`)
         paragraphToReplace.data('metadata', newMetadata)
-        thisTextarea.replaceWith(paragraphToReplace)
+        setParagraphContent(newMetadata.id, newContent)
+          .then(() => thisTextarea.replaceWith(paragraphToReplace))
+          .catch(err => console.error(err)) // TODO Handle error
       }
     })
 
