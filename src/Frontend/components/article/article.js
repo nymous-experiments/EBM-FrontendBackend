@@ -1,22 +1,42 @@
 import $ from 'jquery'
 
-import {getArticle} from '@services/article.service'
+import {getArticle, setArticleTitle} from '@services/article.service'
 import {setParagraphContent} from '@services/paragraphs.service'
 
 import {SET_ARTICLE} from './article.customEvents'
 import {hideArticle, hideNoArticleSelectedMessage, setArticle, showSpinner} from './article.utils'
-import {articleParagraphsContainer} from './article.selectors'
-
-import {CLOSE_DROPDOWN} from '@components/navbar/navbar.customEvents'
+import {articleParagraphsContainer, articleTitle} from './article.selectors'
 
 $(document).on(SET_ARTICLE, function (event, articleId) {
-  $(document).trigger(CLOSE_DROPDOWN)
   hideNoArticleSelectedMessage()
   hideArticle()
   showSpinner()
   getArticle(articleId)
     .then(setArticle)
     .catch(console.err)
+})
+
+articleTitle.click(function (event) {
+  const target = $(event.target)
+  if (target.is('h1')) {
+    const metadata = target.data('metadata')
+    const textInput = $(`<input class="input title" type="text">`).val(metadata.title)
+    textInput.data('previousMetadata', metadata)
+    textInput.keydown(function (event) {
+      if (event.which === 13) { // Enter
+        const thisTextinput = $(event.target)
+        const newTitle = thisTextinput.val()
+        const newMetadata = Object.assign({}, thisTextinput.data('previousMetadata'), {title: newTitle})
+        const titleToReplace = $(`<h1 class="title">${newTitle}</h1>`)
+        titleToReplace.data('metadata', newMetadata)
+        setArticleTitle(newMetadata.id, newTitle)
+          .then(() => thisTextinput.replaceWith(titleToReplace))
+          .catch(err => console.error(err)) // TODO Handle error
+      }
+    })
+    target.html(textInput)
+    textInput.focus()
+  }
 })
 
 articleParagraphsContainer.click(function (event) {

@@ -4,7 +4,6 @@ import {listArticles} from '@services/article.service'
 
 import {closeDropdown, isDropdownOpen, setArticlesList, showSpinner, toggleDropdown} from './navbar.utils'
 import {body, dropdownMenu, navbarDropdown} from './navbar.selectors'
-import {CLOSE_DROPDOWN} from './navbar.customEvents'
 
 import {SET_ARTICLE} from '@components/article/article.customEvents'
 
@@ -27,13 +26,8 @@ navbarDropdown.click(function (event) {
   if (target.is('a')) {
     const articleId = event.target.dataset.id
     $(document).trigger(SET_ARTICLE, articleId)
+    closeDropdown()
   }
-})
-
-$(document).on(CLOSE_DROPDOWN, function (event) {
-  event.stopPropagation()
-  event.preventDefault()
-  closeDropdown()
 })
 
 body.click(function (event) {
