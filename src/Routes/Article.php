@@ -107,8 +107,7 @@ class Article
 
         // $paragraph is false if the query failed
         if ($paragraph) {
-            $id = $db->lastInsertId();
-            return self::getParagraphById($db, $id);
+            return self::getParagraphById($db, $paragraph_id);
         } else {
             http_response_code(404);
             $error = ["error" => "Paragraph not updated"];
