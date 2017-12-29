@@ -60,6 +60,7 @@ class Article
         // $article is false if the query failed
         if ($article) {
             $id = $db->lastInsertId();
+            http_response_code(201);
             return self::getArticleById($db, $id);
         } else {
             http_response_code(404);
@@ -75,6 +76,7 @@ class Article
         // $paragraph is false if the query failed
         if ($paragraph) {
             $id = $db->lastInsertId();
+            http_response_code(201);
             return self::getParagraphById($db, $id);
         } else {
             http_response_code(404);
