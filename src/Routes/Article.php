@@ -91,8 +91,7 @@ class Article
 
         // $article is false if the query failed
         if ($article) {
-            $id = $db->lastInsertId();
-            return self::getArticleById($db, $id);
+            return self::getArticleById($db, $article_id);
         } else {
             http_response_code(404);
             $error = ["error" => "Article not updated"];
