@@ -26,10 +26,10 @@ class Database
     public function query(string $query, bool $onlyOne = false)
     {
         $req = $this->pdo->query($query);
-        if ( // No need to fetch for these operations
-            strpos($query, 'UPDATE') === 0 ||
-            strpos($query, 'INSERT') === 0 ||
-            strpos($query, 'DELETE') === 0
+        // No need to fetch for these operations
+        if (strpos($query, 'UPDATE') === 0
+            || strpos($query, 'INSERT') === 0
+            || strpos($query, 'DELETE') === 0
         ) {
             return $req;
         }
@@ -54,10 +54,10 @@ class Database
         $req = $this->pdo->prepare($query);
         $req->setFetchMode(PDO::FETCH_OBJ);
         $res = $req->execute($attributes);
-        if ( // No need to fetch for these operations
-            strpos($query, 'UPDATE') === 0 ||
-            strpos($query, 'INSERT') === 0 ||
-            strpos($query, 'DELETE') === 0
+        // No need to fetch for these operations
+        if (strpos($query, 'UPDATE') === 0
+            || strpos($query, 'INSERT') === 0
+            || strpos($query, 'DELETE') === 0
         ) {
             return $res;
         }
@@ -75,7 +75,8 @@ class Database
      * Get last inserted id
      * @return string
      */
-    public function lastInsertId() {
+    public function lastInsertId()
+    {
         return $this->pdo->lastInsertId();
     }
 }

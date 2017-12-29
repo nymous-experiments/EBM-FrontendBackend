@@ -40,6 +40,6 @@ class Config
      */
     private function __construct(string $file)
     {
-        $this->settings = require($file);
+        $this->settings = include $file;
     }
 }

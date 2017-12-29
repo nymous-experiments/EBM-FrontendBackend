@@ -2,11 +2,17 @@
 
 namespace EBM;
 
+/**
+ * Utils functions (mostly static)
+ *
+ * @package EBM
+ */
 class Utils
 {
 
     /**
      * Check if a value is an integer
+     *
      * @param $value
      * @return bool
      */
