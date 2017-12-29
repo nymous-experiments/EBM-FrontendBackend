@@ -56,10 +56,9 @@ export function handleTitleKeydown (event) {
     const thisTextinput = $(event.target)
     const newTitle = thisTextinput.val()
     const newMetadata = Object.assign({}, thisTextinput.data('previousMetadata'), {title: newTitle})
-    const titleToReplace = $(`<h1 class="title">${newTitle}</h1>`)
-    titleToReplace.data('metadata', newMetadata)
+    articleTitle.data('metadata', newMetadata)
     setArticleTitle(newMetadata.id, newTitle)
-      .then(() => thisTextinput.replaceWith(titleToReplace))
+      .then(() => articleTitle.html(newTitle))
       .catch(err => console.error(err)) // TODO Handle error
   }
 }
@@ -69,10 +68,29 @@ export function handleParagraphKeydown (event) {
     const thisTextarea = $(event.target)
     const newContent = thisTextarea.val()
     const newMetadata = Object.assign({}, thisTextarea.data('previousMetadata'), {content: newContent})
-    const paragraphToReplace = $(`<p class="article-paragraph" data-order="${newMetadata.order}">${newContent}</p>`)
+    const paragraphToReplace = $(`<p class="article-paragraph">${newContent}</p>`)
     paragraphToReplace.data('metadata', newMetadata)
     setParagraphContent(newMetadata.id, newContent)
-      .then(() => thisTextarea.replaceWith(paragraphToReplace))
+      .then(() => thisTextarea.parent().replaceWith(paragraphToReplace)) // Replace the wrapping div
       .catch(err => console.error(err)) // TODO Handle error
   }
+}
+
+export function resetTitle () {
+  if (articleTitle.children().length > 0) { // The title has an input inside
+    const metadata = articleTitle.data('metadata')
+    articleTitle.html(metadata.title)
+  }
+}
+
+export function resetParagraphs () {
+  articleParagraphsContainer.children().each(function () {
+    const paragraph = $(this)
+    if (paragraph.is('div')) { // Paragraph is being edited
+      const metadata = paragraph.children().data('previousMetadata')
+      const paragraphToReplace = $(`<p class="article-paragraph">${metadata.content}</p>`)
+      paragraphToReplace.data('metadata', metadata)
+      paragraph.replaceWith(paragraphToReplace)
+    }
+  })
 }
