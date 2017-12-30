@@ -114,8 +114,7 @@ switch ($real_route[0]) {
                         } elseif (property_exists($body, "order")) {
                             $response = Article::updateParagraphOrder($db, $paragraphId, $body->order);
                             break 2;
-                        }
-                        else {
+                        } else {
                             $response = Error::badBody();
                             break 2;
                         }
