@@ -71,7 +71,13 @@ class Article
 
     public static function createParagraph(Database $db, int $article_id, string $content)
     {
-        $paragraph = $db->prepare("INSERT INTO np_paragraphs SET article_id=?, content=?", [$article_id, $content]);
+        $paragraph = $db->prepare(
+            "INSERT INTO np_paragraphs (article_id, content, `order`)
+            SELECT ?, ?, max(`order`) + 1
+            FROM np_paragraphs
+            WHERE article_id=?",
+            [$article_id, $content, $article_id]
+        );
 
         // $paragraph is false if the query failed
         if ($paragraph) {
