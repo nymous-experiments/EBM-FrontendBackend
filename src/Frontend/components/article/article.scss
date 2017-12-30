@@ -31,11 +31,27 @@
   padding: 0.2em;
 }
 
-.article-paragraph {
+.paragraph-container {
+  position: relative;
+}
+
+#article-title {
+  padding: 0.3em;
+
+  &:hover {
+    background: #fbfbfb;
+  }
+}
+
+.article-paragraph, .article-paragraph-edition {
   padding: 1em;
   margin: 0.5em;
   background: #fbfbfb;
   border-radius: 6px;
+}
+
+.article-paragraph {
+  user-select: none;
 }
 
 .textarea {
@@ -45,6 +61,12 @@
 .drag-placeholder {
   @extend .article-paragraph;
 
-  height: 4rem;
+  height: 6rem;
   background: #fbf9ca;
+}
+
+.drag-handle {
+  position: absolute;
+  top: 0.8em;
+  right: 1.2em;
 }

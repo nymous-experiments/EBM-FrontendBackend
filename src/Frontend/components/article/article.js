@@ -52,7 +52,7 @@ articleParagraphsContainer.click(function (event) {
   if (target.is('.paragraph-container') || target.is('.article-paragraph')) {
     target = target.is('.paragraph-container') ? target : target.parent()
     const metadata = target.data('metadata')
-    const textarea = $(`<textarea class="textarea article-paragraph"></textarea>`).val(metadata.content)
+    const textarea = $(`<textarea class="textarea article-paragraph-edition"></textarea>`).val(metadata.content)
 
     textarea.data('previousMetadata', metadata)
     textarea.keydown(handleParagraphKeydown)
@@ -64,11 +64,13 @@ articleParagraphsContainer.click(function (event) {
 })
 
 articleParagraphsContainer.sortable({
-  axis: 'y',
   cursor: 'move',
   placeholder: 'drag-placeholder',
   handle: '.drag-handle',
+  revert: 75,
+  tolerance: 'pointer',
   stop: (event, ui) => {
+    event.stopPropagation()
     const paragraph = ui.item
     const paragraphId = paragraph.data('metadata').id
     const newOrder = paragraph.index() + 1 // index() is 0-based, the saved order is 1-based
