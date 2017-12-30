@@ -43,7 +43,7 @@ articleParagraphsContainer.click(function (event) {
   let target = $(event.target)
   // Check if we clicked on a paragraph, on the surrounding div or on the background between paragraphs
   if (target.is('.paragraph-container') || target.is('.article-paragraph')) {
-    target = target.is('.paragraph-container') ? target : target.parent()
+    target = target.closest('.paragraph-container')
     editParagraph(target)
   }
 })
