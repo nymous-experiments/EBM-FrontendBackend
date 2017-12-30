@@ -80,6 +80,10 @@
   margin: 0.2em;
 }
 
+.delete-button {
+  display: none;
+}
+
 .drag-handle:hover {
     cursor: move;
   }

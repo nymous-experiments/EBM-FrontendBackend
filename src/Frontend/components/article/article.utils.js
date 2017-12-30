@@ -179,6 +179,14 @@ function newParagraph (content = '') {
 </div>
 `)
   paragraph.append(toolbar)
+  paragraph.hover(
+    function (event) {
+      const target = $(event.target)
+      target.closest('.paragraph-container').find('.delete-button').css('display', 'inline-flex')
+    }, function (event) {
+      const target = $(event.target)
+      target.closest('.paragraph-container').find('.delete-button').hide()
+    })
 
   return paragraph
 }
