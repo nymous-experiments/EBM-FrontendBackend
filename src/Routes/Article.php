@@ -173,7 +173,7 @@ class Article
         }
     }
 
-    public static function deleteParagraph($db, $paragraph_id){
+    public static function deleteParagraph(Database $db, int $paragraph_id){
 
         $paragraph = $db->prepare("DELETE FROM np_paragraphs WHERE id=?", [$paragraph_id]);
 
@@ -188,7 +188,7 @@ class Article
         }
     }
 
-    public static function deleteArticle($db, $article_id){
+    public static function deleteArticle(Database $db, int $article_id){
 
         $paragraphs = $db->prepare("DELETE FROM np_paragraphs WHERE article_id=?", [$article_id]);
         $article = $db->prepare("DELETE FROM np_articles WHERE id=?", [$article_id]);
