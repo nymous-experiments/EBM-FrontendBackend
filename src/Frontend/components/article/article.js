@@ -9,10 +9,10 @@ import {setParagraphOrder} from '@services/paragraphs.service'
 
 import {SET_ARTICLE} from './article.customEvents'
 import {
-  handleParagraphKeydown, handleTitleKeydown, hideArticle, hideNoArticleSelectedMessage, resetParagraphs,
-  resetTitle, setArticle, showSpinner
+  addParagraph, handleParagraphKeydown, handleTitleKeydown, hideArticle, hideNoArticleSelectedMessage,
+  resetParagraphs, resetTitle, setArticle, showSpinner
 } from './article.utils'
-import {articleParagraphsContainer, articleTitle} from './article.selectors'
+import {articleParagraphsContainer, articleTitle, newParagraphButton} from './article.selectors'
 
 $(document).on(SET_ARTICLE, function (event, articleId) {
   hideNoArticleSelectedMessage()
@@ -73,11 +73,15 @@ articleParagraphsContainer.sortable({
     event.stopPropagation()
     const paragraph = ui.item
     const paragraphId = paragraph.data('metadata').id
-    const newOrder = paragraph.index() + 1 // index() is 0-based, the saved order is 1-based
+    const newOrder = paragraph.index()
     setParagraphOrder(paragraphId, newOrder)
       .catch(() => {
         alert('Something went wrong... Paragraph has been moved back to its previous position')
         articleParagraphsContainer.sortable('cancel')
       })
   }
+})
+
+newParagraphButton.click(function (event) {
+  addParagraph()
 })

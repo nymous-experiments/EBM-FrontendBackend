@@ -33,3 +33,17 @@ export function setParagraphOrder (paragraphId, newOrder) {
       .fail(error => reject(error))
   })
 }
+
+export function createParagraph (articleId) {
+  return new Promise((resolve, reject) => {
+    $.ajax(`/api/articles/${articleId}/paragraphs`, {
+      method: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({
+        content: ''
+      })
+    })
+      .done(data => resolve(data))
+      .fail(error => reject(error))
+  })
+}

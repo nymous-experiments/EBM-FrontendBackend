@@ -5,7 +5,7 @@ import {
   noArticleSelectedMessage
 } from './article.selectors'
 import {setArticleTitle} from '@services/article.service'
-import {setParagraphContent} from '@services/paragraphs.service'
+import {createParagraph, setParagraphContent} from '@services/paragraphs.service'
 
 export function setArticle (article) {
   articleTitle.text(article.title)
@@ -95,7 +95,15 @@ export function resetParagraphs () {
   })
 }
 
-function newParagraph (content) {
+export function addParagraph () {
+  createParagraph(articleTitle.data('metadata').id)
+    .then(paragraph => {
+      articleParagraphsContainer.append(newParagraph().data('metadata', {content: '', id: paragraph.id}))
+    })
+    .catch(err => console.error(err)) // TODO Handle error
+}
+
+function newParagraph (content = '') {
   return $(`<div class="paragraph-container">
     <p class="article-paragraph">${content}</p>
     <span class="icon is-medium drag-handle"><i class="fa fa-lg fa-border fa-fw fa-sort"></i></span>
