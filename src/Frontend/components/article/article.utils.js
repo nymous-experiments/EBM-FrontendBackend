@@ -17,7 +17,7 @@ export function setArticle (article) {
   let paragraphs = []
   if (article.paragraphs) {
     article.paragraphs.forEach(paragraph => {
-      const paragraphToInsert = $(`<p class="article-paragraph">${paragraph.content}</p>`)
+      const paragraphToInsert = newParagraph(paragraph.content)
       paragraphToInsert.data('metadata', {id: paragraph.id, content: paragraph.content})
       paragraphs.push(paragraphToInsert)
     })
@@ -68,7 +68,7 @@ export function handleParagraphKeydown (event) {
     const thisTextarea = $(event.target)
     const newContent = thisTextarea.val()
     const newMetadata = Object.assign({}, thisTextarea.data('previousMetadata'), {content: newContent})
-    const paragraphToReplace = $(`<p class="article-paragraph">${newContent}</p>`)
+    const paragraphToReplace = newParagraph(newContent)
     paragraphToReplace.data('metadata', newMetadata)
     setParagraphContent(newMetadata.id, newContent)
       .then(() => thisTextarea.parent().replaceWith(paragraphToReplace)) // Replace the wrapping div
@@ -88,9 +88,13 @@ export function resetParagraphs () {
     const paragraph = $(this)
     if (paragraph.is('div')) { // Paragraph is being edited
       const metadata = paragraph.children().data('previousMetadata')
-      const paragraphToReplace = $(`<p class="article-paragraph">${metadata.content}</p>`)
+      const paragraphToReplace = newParagraph(metadata.content)
       paragraphToReplace.data('metadata', metadata)
       paragraph.replaceWith(paragraphToReplace)
     }
   })
+}
+
+function newParagraph (content) {
+  return $(`<p class="article-paragraph">${content}</p>`)
 }
