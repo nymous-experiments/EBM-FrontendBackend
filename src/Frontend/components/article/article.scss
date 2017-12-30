@@ -8,6 +8,7 @@
 @import "~bulma/sass/elements/container";
 @import "~bulma/sass/elements/form";
 @import "~bulma/sass/components/message";
+@import "~bulma/sass/components/level";
 @import "~bulma/sass/elements/title";
 @import "~bulma/sass/elements/content";
 
@@ -70,4 +71,8 @@
   position: absolute;
   top: 0.8em;
   right: 1.2em;
+
+  &:hover {
+    cursor: move;
+  }
 }
