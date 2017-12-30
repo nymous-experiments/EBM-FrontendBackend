@@ -38,10 +38,16 @@
 
 #article-title {
   padding: 0.3em;
+  margin-bottom: 0;
 
   &:hover {
     background: #fbfbfb;
     border-radius: 6px;
+  }
+
+  &>input {
+    height: 1.5em;
+    padding-left: 0.1em;
   }
 }
 
