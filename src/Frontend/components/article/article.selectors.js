@@ -9,3 +9,4 @@ export const noArticleSelectedMessage = $('#message-section')
 export const articleSpinner = $('#article-loading')
 
 export const newParagraphButton = $('#add-paragraph')
+export const deleteArticleButton = $('#delete-article')

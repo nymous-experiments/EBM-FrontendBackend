@@ -44,3 +44,13 @@ export function setArticleTitle (articleId, title) {
       .fail(error => reject(error))
   })
 }
+
+export function removeArticle (articleId) {
+  return new Promise((resolve, reject) => {
+    $.ajax(`/api/articles/${articleId}`, {
+      method: 'DELETE'
+    })
+      .done(data => resolve(data))
+      .fail(error => reject(error))
+  })
+}

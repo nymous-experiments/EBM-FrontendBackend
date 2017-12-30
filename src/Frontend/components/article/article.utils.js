@@ -4,7 +4,7 @@ import {
   articleParagraphsContainer, articleSection, articleSpinner, articleTitle,
   noArticleSelectedMessage
 } from './article.selectors'
-import {setArticleTitle} from '@services/article.service'
+import {removeArticle, setArticleTitle} from '@services/article.service'
 import {createParagraph, deleteParagraph, setParagraphContent} from '@services/paragraphs.service'
 
 export function setArticle (article) {
@@ -129,6 +129,19 @@ export function editTitle (target) {
 
   target.html(textInput)
   textInput.focus()
+}
+
+export function deleteArticle () {
+  const shouldDelete = confirm('Do you really want to delete article?')
+  if (shouldDelete) {
+    const articleId = articleTitle.data('metadata').id
+    removeArticle(articleId)
+      .then(() => {
+        hideArticle()
+        showNoArticleSelectedMessage()
+      })
+      .catch(err => console.error(err))
+  }
 }
 
 function newParagraph (content = '') {

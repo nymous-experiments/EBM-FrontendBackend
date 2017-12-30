@@ -9,10 +9,10 @@ import {setParagraphOrder} from '@services/paragraphs.service'
 
 import {SET_ARTICLE} from './article.customEvents'
 import {
-  addParagraph, editParagraph, editTitle, hideArticle, hideNoArticleSelectedMessage, resetParagraphs, resetTitle,
-  setArticle, showSpinner
+  addParagraph, deleteArticle, editParagraph, editTitle, hideArticle, hideNoArticleSelectedMessage,
+  resetParagraphs, resetTitle, setArticle, showSpinner
 } from './article.utils'
-import {articleParagraphsContainer, articleTitle, newParagraphButton} from './article.selectors'
+import {articleParagraphsContainer, articleTitle, deleteArticleButton, newParagraphButton} from './article.selectors'
 
 $(document).on(SET_ARTICLE, function (event, articleId) {
   hideNoArticleSelectedMessage()
@@ -69,4 +69,8 @@ articleParagraphsContainer.sortable({
 
 newParagraphButton.click(function (event) {
   addParagraph()
+})
+
+deleteArticleButton.click(function (event) {
+  deleteArticle()
 })
