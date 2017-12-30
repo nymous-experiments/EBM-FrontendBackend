@@ -18,7 +18,7 @@ export function setArticle (article) {
   if (article.paragraphs) {
     article.paragraphs.forEach(paragraph => {
       const paragraphToInsert = $(`<p class="article-paragraph">${paragraph.content}</p>`)
-      paragraphToInsert.data('metadata', {id: paragraph.id, content: paragraph.content, order: paragraph.order})
+      paragraphToInsert.data('metadata', {id: paragraph.id, content: paragraph.content})
       paragraphs.push(paragraphToInsert)
     })
     articleParagraphsContainer.append(paragraphs)

@@ -71,10 +71,9 @@ articleParagraphsContainer.sortable({
     const paragraphId = paragraph.data('metadata').id
     const newOrder = paragraph.index() + 1 // index() is 0-based, the saved order is 1-based
     setParagraphOrder(paragraphId, newOrder)
-      .then(() => {
-        const newMetadata = Object.assign({}, paragraph.data('metadata'), {order: newOrder})
-        paragraph.data('metadata', newMetadata)
+      .catch(() => {
+        alert('Something went wrong... Paragraph has been moved back to its previous position')
+        articleParagraphsContainer.sortable('cancel')
       })
-      .catch(err => console.error(err))
   }
 })
