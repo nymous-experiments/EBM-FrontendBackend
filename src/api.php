@@ -64,6 +64,10 @@ switch ($real_route[0]) {
                             }
                             $response = Article::updateArticleTitle($db, $articleId, $body->title);
                             break 2;
+                        // DELETE /articles/1
+                        case 'DELETE':
+                            $response = Article::deleteArticle($db, $articleId);
+                            break 2;
                     }
                 }
             } else {
@@ -118,6 +122,10 @@ switch ($real_route[0]) {
                             $response = Error::badBody();
                             break 2;
                         }
+                    // DELETE /paragraphs/1
+                    case 'DELETE':
+                        $response = Article::deleteParagraph($db, $paragraphId);
+                        break 2;
                 }
             }
         }
