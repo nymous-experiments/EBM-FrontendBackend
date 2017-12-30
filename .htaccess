@@ -3,4 +3,5 @@ RewriteBase /
 RewriteCond %{ENV:REDIRECT_STATUS} ^$
 RewriteCond %{REQUEST_URI} !^/api
 RewriteRule ^(.*)$ public/$1 [END,QSA]
-RewriteRule ^/api$ index.php [L,QSA]
+RewriteCond %{REQUEST_URI} ^/api
+RewriteRule ^.* index.php [L,QSA]
