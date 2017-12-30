@@ -41,3 +41,10 @@
 .textarea {
   padding: 1em;
 }
+
+.drag-placeholder {
+  @extend .article-paragraph;
+
+  height: 4rem;
+  background: #fbf9ca;
+}

@@ -1,6 +1,11 @@
 import $ from 'jquery'
+import 'jquery-ui/ui/widgets/sortable'
+import 'jquery-ui/themes/base/core.css'
+import 'jquery-ui/themes/base/sortable.css'
+import 'jquery-ui/themes/base/theme.css'
 
 import {getArticle} from '@services/article.service'
+import {setParagraphOrder} from '@services/paragraphs.service'
 
 import {SET_ARTICLE} from './article.customEvents'
 import {
@@ -54,5 +59,22 @@ articleParagraphsContainer.click(function (event) {
 
     target.replaceWith(toInsert)
     textarea.focus()
+  }
+})
+
+articleParagraphsContainer.sortable({
+  axis: 'y',
+  cursor: 'move',
+  placeholder: 'drag-placeholder',
+  stop: (event, ui) => {
+    const paragraph = ui.item
+    const paragraphId = paragraph.data('metadata').id
+    const newOrder = paragraph.index() + 1 // index() is 0-based, the saved order is 1-based
+    setParagraphOrder(paragraphId, newOrder)
+      .then(() => {
+        const newMetadata = Object.assign({}, paragraph.data('metadata'), {order: newOrder})
+        paragraph.data('metadata', newMetadata)
+      })
+      .catch(err => console.error(err))
   }
 })
