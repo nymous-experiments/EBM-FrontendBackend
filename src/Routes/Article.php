@@ -173,8 +173,8 @@ class Article
         }
     }
 
-    public static function deleteParagraph(Database $db, int $paragraph_id){
-
+    public static function deleteParagraph(Database $db, int $paragraph_id)
+    {
         $paragraph = $db->prepare("DELETE FROM np_paragraphs WHERE id=?", [$paragraph_id]);
 
         // $paragraph is false if the query failed
@@ -188,8 +188,8 @@ class Article
         }
     }
 
-    public static function deleteArticle(Database $db, int $article_id){
-
+    public static function deleteArticle(Database $db, int $article_id)
+    {
         $paragraphs = $db->prepare("DELETE FROM np_paragraphs WHERE article_id=?", [$article_id]);
         $article = $db->prepare("DELETE FROM np_articles WHERE id=?", [$article_id]);
 
@@ -202,6 +202,5 @@ class Article
             $error = ["error" => "Article not deleted"];
             return json_encode($error);
         }
-
     }
 }
