@@ -86,7 +86,7 @@ export function resetTitle () {
 export function resetParagraphs () {
   articleParagraphsContainer.children().each(function () {
     const paragraph = $(this)
-    if (paragraph.is('div')) { // Paragraph is being edited
+    if (paragraph.is('.paragraph-edition')) { // Paragraph is being edited
       const metadata = paragraph.children().data('previousMetadata')
       const paragraphToReplace = newParagraph(metadata.content)
       paragraphToReplace.data('metadata', metadata)
@@ -96,5 +96,8 @@ export function resetParagraphs () {
 }
 
 function newParagraph (content) {
-  return $(`<p class="article-paragraph">${content}</p>`)
+  return $(`<div class="paragraph-container">
+    <p class="article-paragraph">${content}</p>
+    <span class="icon is-medium drag-handle"><i class="fa fa-lg fa-border fa-fw fa-sort"></i></span>
+</div>`)
 }

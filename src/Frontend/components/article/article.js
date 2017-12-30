@@ -47,15 +47,16 @@ articleTitle.click(function (event) {
 })
 
 articleParagraphsContainer.click(function (event) {
-  const target = $(event.target)
-  // Check if we clicked on a paragraph on on the background between paragraphs
-  if (target.is('p')) {
+  let target = $(event.target)
+  // Check if we clicked on a paragraph, on the surrounding div or on the background between paragraphs
+  if (target.is('.paragraph-container') || target.is('.article-paragraph')) {
+    target = target.is('.paragraph-container') ? target : target.parent()
     const metadata = target.data('metadata')
     const textarea = $(`<textarea class="textarea article-paragraph"></textarea>`).val(metadata.content)
 
     textarea.data('previousMetadata', metadata)
     textarea.keydown(handleParagraphKeydown)
-    const toInsert = $(`<div></div>`).html(textarea)
+    const toInsert = $(`<div class="paragraph-edition"></div>`).html(textarea)
 
     target.replaceWith(toInsert)
     textarea.focus()
@@ -66,6 +67,7 @@ articleParagraphsContainer.sortable({
   axis: 'y',
   cursor: 'move',
   placeholder: 'drag-placeholder',
+  handle: '.drag-handle',
   stop: (event, ui) => {
     const paragraph = ui.item
     const paragraphId = paragraph.data('metadata').id
