@@ -17,8 +17,8 @@ export function setArticle (article) {
   let paragraphs = []
   if (article.paragraphs) {
     article.paragraphs.forEach(paragraph => {
-      const paragraphToInsert = $(`<p class="article-paragraph">${paragraph.content}</p>`)
-      paragraphToInsert.data('metadata', {id: paragraph.id, content: paragraph.content, order: paragraph.order})
+      const paragraphToInsert = newParagraph(paragraph.content)
+      paragraphToInsert.data('metadata', {id: paragraph.id, content: paragraph.content})
       paragraphs.push(paragraphToInsert)
     })
     articleParagraphsContainer.append(paragraphs)
@@ -68,7 +68,7 @@ export function handleParagraphKeydown (event) {
     const thisTextarea = $(event.target)
     const newContent = thisTextarea.val()
     const newMetadata = Object.assign({}, thisTextarea.data('previousMetadata'), {content: newContent})
-    const paragraphToReplace = $(`<p class="article-paragraph">${newContent}</p>`)
+    const paragraphToReplace = newParagraph(newContent)
     paragraphToReplace.data('metadata', newMetadata)
     setParagraphContent(newMetadata.id, newContent)
       .then(() => thisTextarea.parent().replaceWith(paragraphToReplace)) // Replace the wrapping div
@@ -86,11 +86,18 @@ export function resetTitle () {
 export function resetParagraphs () {
   articleParagraphsContainer.children().each(function () {
     const paragraph = $(this)
-    if (paragraph.is('div')) { // Paragraph is being edited
+    if (paragraph.is('.paragraph-edition')) { // Paragraph is being edited
       const metadata = paragraph.children().data('previousMetadata')
-      const paragraphToReplace = $(`<p class="article-paragraph">${metadata.content}</p>`)
+      const paragraphToReplace = newParagraph(metadata.content)
       paragraphToReplace.data('metadata', metadata)
       paragraph.replaceWith(paragraphToReplace)
     }
   })
+}
+
+function newParagraph (content) {
+  return $(`<div class="paragraph-container">
+    <p class="article-paragraph">${content}</p>
+    <span class="icon is-medium drag-handle"><i class="fa fa-lg fa-border fa-fw fa-sort"></i></span>
+</div>`)
 }

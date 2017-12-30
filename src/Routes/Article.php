@@ -142,7 +142,9 @@ class Article
                     [$article_id, $new_order, $old_order]
                 );
             } else {
-                $paragraphs_to_move = false;
+                http_response_code(200);
+                $message = ["message" => "Paragraph already at the correct order"];
+                return json_encode($message);
             }
 
             $paragraph = $db->prepare(

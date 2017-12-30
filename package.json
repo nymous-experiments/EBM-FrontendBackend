@@ -62,9 +62,11 @@
     "webpack-dev-server": "^2.9.7"
   },
   "dependencies": {
+    "@types/jqueryui": "^1.12.0",
     "babel-polyfill": "^6.26.0",
     "bulma": "^0.6.1",
     "font-awesome": "^4.7.0",
-    "jquery": "^3.2.1"
+    "jquery": "^3.2.1",
+    "jquery-ui": "^1.12.1"
   }
 }

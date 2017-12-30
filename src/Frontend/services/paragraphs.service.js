@@ -19,3 +19,17 @@ export function setParagraphContent (paragraphId, content) {
       .fail(error => reject(error))
   })
 }
+
+export function setParagraphOrder (paragraphId, newOrder) {
+  return new Promise((resolve, reject) => {
+    $.ajax(`/api/paragraphs/${paragraphId}`, {
+      method: 'PATCH',
+      contentType: 'application/json',
+      data: JSON.stringify({
+        order: newOrder
+      })
+    })
+      .done(data => resolve(data))
+      .fail(error => reject(error))
+  })
+}

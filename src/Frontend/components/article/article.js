@@ -1,6 +1,11 @@
 import $ from 'jquery'
+import 'jquery-ui/ui/widgets/sortable'
+import 'jquery-ui/themes/base/core.css'
+import 'jquery-ui/themes/base/sortable.css'
+import 'jquery-ui/themes/base/theme.css'
 
 import {getArticle} from '@services/article.service'
+import {setParagraphOrder} from '@services/paragraphs.service'
 
 import {SET_ARTICLE} from './article.customEvents'
 import {
@@ -42,17 +47,37 @@ articleTitle.click(function (event) {
 })
 
 articleParagraphsContainer.click(function (event) {
-  const target = $(event.target)
-  // Check if we clicked on a paragraph on on the background between paragraphs
-  if (target.is('p')) {
+  let target = $(event.target)
+  // Check if we clicked on a paragraph, on the surrounding div or on the background between paragraphs
+  if (target.is('.paragraph-container') || target.is('.article-paragraph')) {
+    target = target.is('.paragraph-container') ? target : target.parent()
     const metadata = target.data('metadata')
-    const textarea = $(`<textarea class="textarea article-paragraph"></textarea>`).val(metadata.content)
+    const textarea = $(`<textarea class="textarea article-paragraph-edition"></textarea>`).val(metadata.content)
 
     textarea.data('previousMetadata', metadata)
     textarea.keydown(handleParagraphKeydown)
-    const toInsert = $(`<div></div>`).html(textarea)
+    const toInsert = $(`<div class="paragraph-edition"></div>`).html(textarea)
 
     target.replaceWith(toInsert)
     textarea.focus()
+  }
+})
+
+articleParagraphsContainer.sortable({
+  cursor: 'move',
+  placeholder: 'drag-placeholder',
+  handle: '.drag-handle',
+  revert: 75,
+  tolerance: 'pointer',
+  stop: (event, ui) => {
+    event.stopPropagation()
+    const paragraph = ui.item
+    const paragraphId = paragraph.data('metadata').id
+    const newOrder = paragraph.index() + 1 // index() is 0-based, the saved order is 1-based
+    setParagraphOrder(paragraphId, newOrder)
+      .catch(() => {
+        alert('Something went wrong... Paragraph has been moved back to its previous position')
+        articleParagraphsContainer.sortable('cancel')
+      })
   }
 })

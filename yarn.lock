@@ -59,9 +59,15 @@
   dependencies:
     "@types/node" "*"
 
-"@types/jquery@^3.2.17":
+"@types/jquery@*", "@types/jquery@^3.2.17":
   version "3.2.17"
   resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.2.17.tgz#01df9805dd5cf83a14cf5bfd81adced7d4fbd970"
+
+"@types/jqueryui@^1.12.0":
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/@types/jqueryui/-/jqueryui-1.12.0.tgz#69e6e6e2c1c7b97d0b6405c8f6036db09056bd87"
+  dependencies:
+    "@types/jquery" "*"
 
 "@types/mime@*":
   version "2.0.0"
@@ -4008,6 +4014,10 @@ jpeg-js@^0.1.1:
 jpeg-js@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/jpeg-js/-/jpeg-js-0.2.0.tgz#53e448ec9d263e683266467e9442d2c5a2ef5482"
+
+jquery-ui@^1.12.1:
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/jquery-ui/-/jquery-ui-1.12.1.tgz#bcb4045c8dd0539c134bc1488cdd3e768a7a9e51"
 
 jquery@^3.2.1:
   version "3.2.1"
