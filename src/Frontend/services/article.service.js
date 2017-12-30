@@ -45,6 +45,20 @@ export function setArticleTitle (articleId, title) {
   })
 }
 
+export function createArticle (title = 'New Article') {
+  return new Promise((resolve, reject) => {
+    $.ajax(`/api/articles`, {
+      method: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({
+        title: title
+      })
+    })
+      .done(data => resolve(data))
+      .fail(error => reject(error))
+  })
+}
+
 export function removeArticle (articleId) {
   return new Promise((resolve, reject) => {
     $.ajax(`/api/articles/${articleId}`, {

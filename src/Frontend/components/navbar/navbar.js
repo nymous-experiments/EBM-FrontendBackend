@@ -1,9 +1,9 @@
 import $ from 'jquery'
 
-import {listArticles} from '@services/article.service'
+import {createArticle, listArticles} from '@services/article.service'
 
 import {closeDropdown, isDropdownOpen, setArticlesList, showSpinner, toggleDropdown} from './navbar.utils'
-import {body, dropdownMenu, navbarDropdown} from './navbar.selectors'
+import {body, dropdownMenu, navbarDropdown, newArticleButton} from './navbar.selectors'
 
 import {SET_ARTICLE} from '@components/article/article.customEvents'
 
@@ -32,4 +32,12 @@ navbarDropdown.click(function (event) {
 
 body.click(function (event) {
   closeDropdown()
+})
+
+newArticleButton.click(function (event) {
+  createArticle()
+    .then((article) => {
+      $(document).trigger(SET_ARTICLE, article.id)
+    })
+    .catch(err => console.error(err))
 })
