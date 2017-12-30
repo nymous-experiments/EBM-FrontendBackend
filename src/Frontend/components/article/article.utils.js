@@ -142,11 +142,14 @@ function newParagraph (content = '') {
   deleteButton.click(function (event) {
     event.preventDefault()
     event.stopPropagation()
-    const target = $(event.target)
-    const paragraphContainer = target.closest('.paragraph-container')
-    deleteParagraph(paragraphContainer.data('metadata').id)
-      .then(() => paragraphContainer.remove())
-      .catch(err => console.error(err))
+    const shouldDelete = confirm('Do you really want to delete paragraph?')
+    if (shouldDelete) {
+      const target = $(event.target)
+      const paragraphContainer = target.closest('.paragraph-container')
+      deleteParagraph(paragraphContainer.data('metadata').id)
+        .then(() => paragraphContainer.remove())
+        .catch(err => console.error(err))
+    }
   })
 
   const toolbar = $(`
