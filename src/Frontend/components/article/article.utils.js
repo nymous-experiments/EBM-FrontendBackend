@@ -5,7 +5,7 @@ import {
   noArticleSelectedMessage
 } from './article.selectors'
 import {setArticleTitle} from '@services/article.service'
-import {createParagraph, setParagraphContent} from '@services/paragraphs.service'
+import {createParagraph, deleteParagraph, setParagraphContent} from '@services/paragraphs.service'
 
 export function setArticle (article) {
   articleTitle.text(article.title)
@@ -132,8 +132,36 @@ export function editTitle (target) {
 }
 
 function newParagraph (content = '') {
-  return $(`<div class="paragraph-container">
+  const deleteButton = $(`
+<button class="button is-danger delete-button">
+    <span class="icon">
+        <i class="fa fa-trash-o"></i>
+    </span>
+</button>
+`)
+  deleteButton.click(function (event) {
+    event.preventDefault()
+    event.stopPropagation()
+    const target = $(event.target)
+    const paragraphContainer = target.closest('.paragraph-container')
+    deleteParagraph(paragraphContainer.data('metadata').id)
+      .then(() => paragraphContainer.remove())
+      .catch(err => console.error(err))
+  })
+
+  const toolbar = $(`
+<div class="paragraph-toolbar">
+    <span class="button drag-handle"><i class="fa fa-sort"></i></span>
+</div>
+`)
+  toolbar.append(deleteButton)
+
+  const paragraph = $(`
+<div class="paragraph-container">
     <p class="article-paragraph">${content}</p>
-    <span class="icon is-medium drag-handle"><i class="fa fa-lg fa-border fa-fw fa-sort"></i></span>
-</div>`)
+</div>
+`)
+  paragraph.append(toolbar)
+
+  return paragraph
 }
