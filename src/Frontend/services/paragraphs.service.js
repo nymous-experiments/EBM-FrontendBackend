@@ -47,3 +47,13 @@ export function createParagraph (articleId) {
       .fail(error => reject(error))
   })
 }
+
+export function deleteParagraph (paragraphId) {
+  return new Promise((resolve, reject) => {
+    $.ajax(`/api/paragraphs/${paragraphId}`, {
+      method: 'DELETE'
+    })
+      .done(data => resolve(data))
+      .fail(error => reject(error))
+  })
+}

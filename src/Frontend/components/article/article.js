@@ -9,10 +9,10 @@ import {setParagraphOrder} from '@services/paragraphs.service'
 
 import {SET_ARTICLE} from './article.customEvents'
 import {
-  addParagraph, editParagraph, editTitle, hideArticle, hideNoArticleSelectedMessage, resetParagraphs, resetTitle,
-  setArticle, showSpinner
+  addParagraph, deleteArticle, editParagraph, editTitle, hideArticle, hideNoArticleSelectedMessage,
+  resetParagraphs, resetTitle, setArticle, showSpinner
 } from './article.utils'
-import {articleParagraphsContainer, articleTitle, newParagraphButton} from './article.selectors'
+import {articleParagraphsContainer, articleTitle, deleteArticleButton, newParagraphButton} from './article.selectors'
 
 $(document).on(SET_ARTICLE, function (event, articleId) {
   hideNoArticleSelectedMessage()
@@ -43,7 +43,7 @@ articleParagraphsContainer.click(function (event) {
   let target = $(event.target)
   // Check if we clicked on a paragraph, on the surrounding div or on the background between paragraphs
   if (target.is('.paragraph-container') || target.is('.article-paragraph')) {
-    target = target.is('.paragraph-container') ? target : target.parent()
+    target = target.closest('.paragraph-container')
     editParagraph(target)
   }
 })
@@ -69,4 +69,8 @@ articleParagraphsContainer.sortable({
 
 newParagraphButton.click(function (event) {
   addParagraph()
+})
+
+deleteArticleButton.click(function (event) {
+  deleteArticle()
 })
