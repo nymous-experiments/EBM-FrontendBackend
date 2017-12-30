@@ -98,9 +98,10 @@ export function resetParagraphs () {
 }
 
 export function addParagraph () {
-  createParagraph(articleTitle.data('metadata').id)
+  const content = 'Nouveau paragraphe'
+  createParagraph(articleTitle.data('metadata').id, content)
     .then(paragraph => {
-      const addedParagraph = newParagraph().data('metadata', {content: '', id: paragraph.id})
+      const addedParagraph = newParagraph(content).data('metadata', {content: content, id: paragraph.id})
       articleParagraphsContainer.append(addedParagraph)
       $('html').scrollTop(addedParagraph.offset().top)
       editParagraph(addedParagraph)

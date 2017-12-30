@@ -34,13 +34,13 @@ export function setParagraphOrder (paragraphId, newOrder) {
   })
 }
 
-export function createParagraph (articleId) {
+export function createParagraph (articleId, content = '') {
   return new Promise((resolve, reject) => {
     $.ajax(`/api/articles/${articleId}/paragraphs`, {
       method: 'POST',
       contentType: 'application/json',
       data: JSON.stringify({
-        content: ''
+        content: content
       })
     })
       .done(data => resolve(data))
