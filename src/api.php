@@ -136,5 +136,7 @@ switch ($real_route[0]) {
 }
 
 header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: https://editor.swagger.io");
+header("Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE");
 
 echo($response);
