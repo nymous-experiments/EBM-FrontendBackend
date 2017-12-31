@@ -6,25 +6,27 @@ EBM-FrontendBackend
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
 [<img src="https://bulma.io/images/made-with-bulma.png" alt="Made with Bulma" width="106" height="20">](https://bulma.io)
 
-Le projet est déployé sur Heroku à cette adresse : https://warm-mesa-18064.herokuapp.com/
+Le projet est déployé sur Heroku à cette adresse : https://warm-mesa-18064.herokuapp.com/. Comme Heroku met en sommeil les instances inutilisées, le premier chargement du site sera un peu plus long. Soyez patient !
 
-## Installation 
+## Installation
 
-1. Créer une base de données MySQL
-2. Importer les données depuis [`seed.sql`](seed.sql)
-3. Copier le fichier [`.env.example`](.env.example) en `.env` et ajuster les paramètres de connexion à la BDD
-(il est aussi possible de passer les paramètres grâce à des variables d'environnement, pour des hébergements comme Heroku)
-4. Installer [Composer](https://getcomposer.org/download/), et installer les dépendances (`php composer.phar install`)
-5. Dumper l'autoloader permettant de charger les fichiers automatiquement (`php composer.phar dump-autoload`)
-6. Installer les dépendances frontend (`yarn` ou `npm install`)
-7. Compiler le projet front : `npm run prod`
-8. Lancer le serveur
-    - Sur un environnement Apache, le fichier `.htaccess` sert à router les requêtes vers le fichier `index.php`,
-    qui dispatche ensuite aux différents contrôleurs 
-    - Sur un environnement de développement avec le serveur PHP intégré, lancer avec la commande
-    `php -S 127.0.0.1:8080 -t public $(pwd)/index.php`, qui forcera le serveur PHP à ne charger que le fichier index.php
-    (mimant ainsi le comportement d'Apache) (si vous êtes sous Windows, il vous faut trouver le chemin absolu vers `index.php`
-    vous même)
+1. Cloner le dossier (dans le dossier d'Apache, de nginx, de Wamp, ou n'importe où si vous utilisez le serveur interne PHP pour le développement)
+2. Créer une base de données MySQL
+3. Importer les données d'exemple (qui créent 2 articles et ajoutent 4 paragraphes au premier article) depuis [`seed.sql`](seed.sql)
+4. Copier le fichier [`.env.example`](.env.example) en `.env` et ajuster les paramètres de connexion à la BDD (il est aussi possible de passer les paramètres grâce à des variables d'environnement, pour des hébergements comme Heroku)
+5. Installer [Composer](https://getcomposer.org/download/), et installer les dépendances (`php composer.phar install` dans le cas d'une installation locale de composer, `composer install` pour une installation globale ou si installé avec le `setup.exe` sur Windows)
+6. Dumper l'autoloader permettant de charger les fichiers automatiquement (`php composer.phar dump-autoload` ou `composer dump-autoload`)
+7. Installer NodeJS et les dépendances frontend (`yarn` si vous utilisez Yarn, ou `npm install`)
+8. Compiler les fichiers frontend : `npm run prod`
+9. Lancer le serveur
+    - Sur un environnement Apache, le fichier `.htaccess` sert à router les requêtes vers le fichier `index.php`, qui dispatche ensuite aux différents contrôleurs
+    - Sur un environnement de développement avec le serveur PHP intégré, lancer avec la commande `php -S 127.0.0.1:8080 -t public $(pwd)/index.php`, qui forcera le serveur PHP à ne charger que le fichier index.php (mimant ainsi le comportement d'Apache) (si vous êtes sous Windows, il vous faut indiquer le chemin absolu vers `index.php`
+    à la main, plutôt que d'utiliser `$(pwd)/index.php`)
+
+**Déploiement sur Heroku**
+
+Le projet doit être compilé avant d'être lancé, ce qui nécessite des dépendances NPM de développement. Il faut donc
+passer la variable `NPM_CONFIG_PRODUCTION` à `false`, avec la commande `heroku config:set NPM_CONFIG_PRODUCTION=false`
 
 ## API
 
@@ -86,7 +88,7 @@ Les dépendances frontend sont gérées par NPM/yarn.
 
 ## Auteurs
 
-Thomas Gaudin & William Joncquel 
+Thomas Gaudin & William Joncquel
 
 [Dotenv]: https://packagist.org/packages/vlucas/phpdotenv
 [phpcs]: https://packagist.org/packages/squizlabs/php_codesniffer
