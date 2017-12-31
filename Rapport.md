@@ -132,46 +132,9 @@ Service gratuit ici, hébergement PHP + Node, installation automatique des dépe
 
 * Utiliser des regex pour les routes, probablement plus maintenable que d'exploser la route dans un tableau et de vérifier à chaque étape si l'ID est un nombre
 * Créer des méthodes pour rendre le routeur plus propre. Par exemple, ne pas avoir une cascade de `switch/case` qui vérifient les méthodes, mais créer une classe `Router` qui a des méthodes `get()`, `post()`, `put()` et `delete()`, et qui vérifie quelle route match.
-* Utiliser un micro-framework comme Zend Expressive (vidéo de présentation en français @@TODO ici@@), pour éviter de recoder ces éléments très classiques
-* Utiliser un framework pour le frontend. jQuery peut être utile pour des besoins simples (et encore, avec les avancées des navigateurs, et le travail de standardisation du W3C et de l'ECMAScript, beaucoup des choses qui nécessitaient autrefois jQuery peuvent être faites nativement (cf @@TOO youdontneedjquery.com@@), évitant ainsi de charger 90ko de JS tout en ayant de meilleurs performances => Ajax avec `fetch()`, sélection avec `document.getElementById()/document.querySelector()`), mais dès qu'une application devient un peu complexe le code ressemble à un plat de spaghetti, avec des événements bindés depuis un peu partout, et une impossibilité de séparer les fichiers proprement.
+* Utiliser un micro-framework comme Zend Expressive (vidéo de présentation en français [ici](https://www.grafikart.fr/tutoriels/php/zend-expressive-905)), pour éviter de recoder ces éléments très classiques
+* Utiliser un framework pour le frontend. jQuery peut être utile pour des besoins simples (et encore, avec les avancées des navigateurs, et le travail de standardisation du W3C et de l'ECMAScript, beaucoup des choses qui nécessitaient autrefois jQuery peuvent être faites nativement (cf http://youmightnotneedjquery.com/), évitant ainsi de charger 90ko de JS tout en ayant de meilleurs performances => Ajax avec `fetch()`, sélection avec `document.getElementById()/document.querySelector()`), mais dès qu'une application devient un peu complexe le code ressemble à un plat de spaghetti, avec des événements bindés depuis un peu partout, et une impossibilité de séparer les fichiers proprement.
 * Mettre plus de PHPdoc et de JSdoc, pour aider le développeur à comprendre l'utilité des fonctions, et aider les IDE à proposer les bons types et les bonnes complétions
-
--------
-
-Article.php
-
-    Ce fichier contient toutes les fonctions back end du projet. Ce sont ces fonctions qui seront utilisées par l’utilisateur pour agir sur les articles et les paragraphes.
-
-getArticles
-Cette fonction renvoie la liste des articles, afin de pouvoir l’afficher.
-
-getArticleById
-Cette fonction renvoie un article donné, ainsi que les paragraphes qui lui sont associés.
-
-getParagraphById
-Cette fonction renvoie un paragraphe donné.
-
-createArticle
-Cette fonction permet de créer un article et de lui donner un titre.
-
-createParagraph
-Cette fonction permet de créer un paragraphe associé à un article, et de lui donner un contenu. Le paragraphe est automatiquement placé dernier dans la liste des paragraphes liés à l’article en question.
-
-updateArticleTitle
-Cette fonction permet de mettre à jour le titre d’un article.
-
-updateParagraphContent
-Cette fonction permet de mettre à jour le contenu d’un paragraphe.
-
-updateParagraphOrder
-Cette fonction permet de mettre à jour l’ordre d’un paragraphe.
-
-deleteParagraph
-Cette fonction permet de supprimer un paragraphe.
-
-deleteArticle
-Cette fonction permet de supprimer un article.
-
 
 [Dotenv]: https://packagist.org/packages/vlucas/phpdotenv
 [phpcs]: https://packagist.org/packages/squizlabs/php_codesniffer
