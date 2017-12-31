@@ -75,7 +75,7 @@ On manipule 2 ressources : `Articles` et `Paragraphs`.
 Le projet utilise le système de typage de PHP 7, ainsi que les namespaces pour charger les classes automatiquement.
 
 Composer est également utilisé pour gérer les dépendances backend :
-- [`Dotenv`][Dotenv] poour charger les paramètres depuis un fichier `.env`
+- [`Dotenv`][Dotenv] pour charger les paramètres depuis un fichier `.env`
 - [`PHP_CodeSniffer`][phpcs] pour vérifier la conformité du code aux standards PSR-1 et PSR-2
 
 Les dépendances frontend sont gérées par NPM/yarn.
@@ -83,7 +83,7 @@ Les dépendances frontend sont gérées par NPM/yarn.
 ## Sources
 
 - Système de routeur pour l'API REST : https://stackoverflow.com/questions/36675596/converting-a-very-simple-htaccess-into-a-php-router
-- Quelques inspirations de la [formation PHP Orienté Objet][Grafikart POO] de Grafikart (classe `Config`)
+- Quelques inspirations de la [formation PHP Orienté Objet][Grafikart POO] de Grafikart (classes `Config` et `Database`)
 - La configuration Webpack est grandement basée sur la [formation Webpack][Grafikart Webpack] de Grafikart
 
 ## Auteurs
