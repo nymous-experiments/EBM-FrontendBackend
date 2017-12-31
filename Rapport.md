@@ -9,7 +9,7 @@ Le livrable se compose de deux parties :
 
 Une documentation d'installation est également disponible, dans le fichier [`README.md`](README.md).
 
-L'historique du code est géré par [git](@@TODO lien@@), et hébergé sur un dépôt Github pour permettre une collaboration facile entre les développeurs. L'ensemble du code écrit est placé sous [licence MIT](https://opensource.org/licenses/MIT).
+L'historique du code est géré par [git](https://git-scm.com/), et hébergé sur un [dépôt Github](https://github.com/nymous-experiments/EBM-FrontendBackend) pour permettre une collaboration facile entre les développeurs. L'ensemble du code écrit est placé sous [licence MIT](https://opensource.org/licenses/MIT).
 
 Une instance de test de l'API ainsi que de l'interface est hébergée chez Heroku, à l'adresse https://warm-mesa-18064.herokuapp.com/. (Une description d'Heroku est disponible dans le [glossaire](#glossaire))
 
@@ -65,6 +65,64 @@ use EBM\Routes\Article;
 
 Pour simplifier les interactions avec la BDD, une classe [`Database`](src/Database.php) a été créée, pour encapsuler la connexion PDO. On y retrouve les méthodes pour effectuer une requête normale (non préparée, donc sans variable utilisateur), une requête préparée, et une fonction utilitaire `lastInsertId()` qui renvoie le dernier ID inséré, pour savoir quelle ligne vient d'être créée dans la BDD. Cette classe est inspirée de la [formation PHP POO de Grafikart][Grafikart POO].
 
+## Frontend
+
+Le frontend consiste en une Single-Page Application, développée en Javascript. Cette page permet à un utilisateur d'interagir avec l'API.
+
+### Technologies utilisées
+
+Ce projet a été l'occasion de mettre en place une chaîne de compilation Javascript moderne, et de l'appliquer à un projet utilisant jQuery (ou du moins essayer, jQuery ne se prêtant pas vraiment à cette nouvelle manière de travailler).
+
+**Javascript**
+
+Le frontend a été développé principalement avec ECMAScript 6, nouvelle version du standard définissant le langage Javascript et sortie en 2015. Les principales nouveautés utilisées dans ce projet sont :
+* les nouveaux mots-clé `let` et `const`, pour définir les variables  de manière plus intuitive (un hoisting au niveau bloc et non au niveau fonction), et pour définir des constantes (plus performantes, et permettant de détecter certains bugs plus tôt lors de la modification de variables supposées constantes) ;
+* les promesses, permettant de faire de l'asynchrone sans se perdre dans une pyramide de callbacks ;
+* les valeurs par défaut pour les paramètres de fonction, ce qui permet de définir une fonction ainsi
+```js
+function newParagraph (content = '') {
+}
+```
+* les fonctions fléchées, qui définissent le `this` interne en fonction du contexte d'appel de la fonction, et qui permettent une syntaxe raccourcie
+* les modules et les exports, qui permettent de découper son code en plusieurs fichiers de façon modulaire, et de n'importer que les fonctions nécessaires
+
+**SCSS**
+
+Les feuilles de style du projet sont générées grâce à SCSS, un préprocesseur CSS qui ajoute plusieurs fonctionnalités au CSS :
+* des variables CSS réutilisables (permettant de définir par exemple une couleur, ou une dimension, et de l'appliquer à plusieurs endroits dans la feuille de styles) ; cette fonctionnalité est désormais standardisée dans CSS3, mais son support dans les navigateurs n'est pas encore complet ;
+* un découpage en styles modulables, pour importer uniquement ce qui est utilisé : dans le fichier [`article.scss`](src/Frontend/components/article/article.scss), nous n'importons que les styles nécessaires depuis le framework Bulma ;
+* des sélecteurs imbriqués : comme on peut le voir à la ligne [43](src/Frontend/components/article/article.scss#L43) du `article.scss`, une syntaxe SCSS permet de définir des sélecteurs plus spécifiques à partir du sélecteur précédent, plus simplement que s'il fallait répéter les sélecteurs
+
+**Handlebars**
+
+Pour découper aussi le code HTML, nous avons utilisé le langage de templating [*Handlebars*](http://handlebarsjs.com/). Ainsi, le fichier [`index.hbs`](src/Frontend/index.hbs) inclut les templates des deux composants de notre application, la [navbar](src/Frontend/components/navbar/navbar.hbs) et le conteneur [article](src/Frontend/components/article/article.hbs).
+
+### Toolchain
+
+Aujourd'hui, l'écosystème Javascript s'est énormément complexifié, et nécessite désormais une chaîne d'outils pour compiler et transpiler le code. Nous nous sommes appuyés sur la [formation de Grafikart][Grafikart Webpack] pour configurer les outils.
+
+**Webpack**
+
+[Webpack](https://webpack.js.org/) est la colonne vertébrale du système de build. Il sert à compiler toutes les ressources nécessaires pour un projet frontend, que ce soit des fichiers Javascript, des feuilles de styles CSS, des images, polices... Il fonctionne grâce à des *loaders*, qui s'appliquent à certains types de fichiers, et peuvent en comprendre la syntaxe et appliquer certaines transformations.
+
+La configuration de Webpack s'effectue dans le fichier [`webpack.config.js`](webpack.config.js). Il a été commenté pour expliquer l'utilité de chaque loader et chaque option, mais nous décrirons les principaux outils ci-dessous.
+
+**Babel**
+
+[Babel](http://babeljs.io/) est un transpilateur : il prend en entrée un fichier Javascript, et va le transformer en un autre fichier Javascript. Il permet ainsi d'utiliser la syntaxe ECMAScript 6 et plus récente, tout en assurant la compatibilité avec les navigateurs plus anciens, en remplaçant par exemple les `let` et `const` par des `var` qui respectent le scope des variables. Il utilise des tables de compatibilité indiquant quelle fonctionnalité est supportée par quelle version de navigateur, et transforme uniquement la syntaxe non comprise par ceux-ci.
+
+Babel est configuré grâce au fichier [`.babelrc`](.babelrc).
+
+**ESLint**
+
+Pour s'assurer que les développeurs formattent leur code de la même manière, et pour éviter certaines erreurs détectables statiquement (une variable non déclarée ou non utilisée par exemple), nous vérifions tous les fichiers Javascript grâce à [ESLint](https://eslint.org/), en utilisant les règles de [StandardJS](https://standardjs.com/). Elles ont l'avantage d'être strictes et sans aucune configuration nécessaire.
+
+ESLint est configuré dans le fichier [`.eslintrc`](.eslintrc).
+
+**package.json**
+
+Le fichier [`package.json`](package.json) contient toutes les dépendances nécessaires au développement et à la production. On y retrouve également les scripts permettant de lancer le projet en mode de développement (avec hot-reload et sans compression des ressources) ou en mode production.
+
 ## Glossaire
 
 **Heroku** : Hébergeur proposant des @@TODO@@
@@ -118,3 +176,4 @@ Cette fonction permet de supprimer un article.
 [Dotenv]: https://packagist.org/packages/vlucas/phpdotenv
 [phpcs]: https://packagist.org/packages/squizlabs/php_codesniffer
 [Grafikart POO]: https://www.grafikart.fr/formations/programmation-objet-php
+[Grafikart Webpack]: https://www.grafikart.fr/formations/webpack

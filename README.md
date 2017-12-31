@@ -8,6 +8,10 @@ EBM-FrontendBackend
 
 Le projet est déployé sur Heroku à cette adresse : https://warm-mesa-18064.herokuapp.com/. Comme Heroku met en sommeil les instances inutilisées, le premier chargement du site sera un peu plus long. Soyez patient !
 
+## Rapport
+
+Le rapport est à lire dans le fichier [`Rapport.md`](Rapport.md).
+
 ## Installation
 
 1. Cloner le dossier (dans le dossier d'Apache, de nginx, de Wamp, ou n'importe où si vous utilisez le serveur interne PHP pour le développement)
