@@ -11,7 +11,7 @@ Une documentation d'installation est également disponible, dans le fichier [`RE
 
 L'historique du code est géré par [git](https://git-scm.com/), et hébergé sur un [dépôt Github](https://github.com/nymous-experiments/EBM-FrontendBackend) pour permettre une collaboration facile entre les développeurs. L'ensemble du code écrit est placé sous [licence MIT](https://opensource.org/licenses/MIT).
 
-Une instance de test de l'API ainsi que de l'interface est hébergée chez Heroku, à l'adresse https://warm-mesa-18064.herokuapp.com/. (Une description d'Heroku est disponible dans le [glossaire](#glossaire))
+Une instance de test de l'API ainsi que de l'interface est hébergée chez Heroku, à l'adresse https://warm-mesa-18064.herokuapp.com/. (Une description d'Heroku est disponible [plus bas](#heroku))
 
 ## Backend
 
@@ -119,22 +119,53 @@ Pour s'assurer que les développeurs formattent leur code de la même manière, 
 
 ESLint est configuré dans le fichier [`.eslintrc`](.eslintrc).
 
+**Bulma**
+
+Afin d'obtenir une interface propre en peu de temps, nous avont utilisé le framework CSS [Bulma](https://bulma.io/). C'est un framework simple basé sur les Flexbox. Il est disponible sous la forme de modules SCSS, ce qui permet de n'importer que les composants nécessaires.
+
 **package.json**
 
 Le fichier [`package.json`](package.json) contient toutes les dépendances nécessaires au développement et à la production. On y retrouve également les scripts permettant de lancer le projet en mode de développement (avec hot-reload et sans compression des ressources) ou en mode production.
 
-## Glossaire
+### Architecture du code
 
-**Heroku** : Hébergeur proposant des @@TODO@@
-Service gratuit ici, hébergement PHP + Node, installation automatique des dépendances, environnement Apache, intégré à git (`git push heroku master` permet de déployer une nouvelle version, et tout est automatisé à partir de là)
+**Composants**
+
+Le code est découpé en deux composants : la navbar, et le conteneur de l'article. Les services permettant d'interagir avec l'API ont été extraits dans le dossier [`services`](src/Frontend/services).
+
+Chaque composant est découpé en différents fichiers, gérant la structure HTML, le style, et les comportements Javascript. Prenons comme exemple le composant [`article`](src/Frontend/components/article).
+
+La structure HTML est décrite dans le fichier [`article.hbs`](src/Frontend/components/article/article.hbs).
+
+Le fichier [`article.selectors.js`](src/Frontend/components/article/article.selectors.js) export les différents éléments jQuery fixes disponibles dans le composant. Cela évite de sélectionner plusieurs fois le même élément, et de perdre en performance (tout en permettant de changer à un seul endroit un sélecteur si la structure HTML change).
+
+Le fichier [`article.utils.js`](src/Frontend/components/article/article.utils.js) contient les différentes fonctions qui permettent de manipuler la page, ou de réagir à des événements.
+
+Le fichier [`article.customEvents.js`](src/Frontend/components/article/article.customEvents.js) permet de définir des événements spéciaux, qui seront exportés pour permettre aux autres composants de déclencher des actions dans le composant article. Cela permet un couplage faible entre les composants, par exemple la navbar va déclencher l'événement `SET_ARTICLE`, qui sera intercepté par le conteneur d'article. Pas besoin de cibler une fonction particulière du composant, ou un élément.
+
+Le fichier [`article.js`](src/Frontend/components/article/article.js) contient les définitions des événements affectés aux éléments du composant. C'est lui qui est importé par le JS principal [`index.js`](src/Frontend/assets/js/index.js).
+
+Enfin, le fichier [`article.scss`](src/Frontend/components/article/article.scss) contient les styles nécessaires à ce composant. Il importe les éléments depuis Bulma, et ajoute des propriétés pour certains sélecteurs. Il est importé depuis le SCSS principal [`main.scss`](src/Frontend/assets/scss/main.scss).
+
+Le composant [navbar](src/Frontend/components/navbar) est architecturé de la même manière.
+
+On peut remarquer que jQuery est importé dans chaque fichier JS. Au moment de la compilation Webpack se chargera de n'inclure qu'une fois chaque dépendance, il n'y a donc pas de problème de taille du bundle. Pour les dépendances qui le supportent, il serait possible de n'importer que les fonctions nécessaires, et Webpack pourrait alors faire du tree-shaking et retirer du bundle le code inutilisé.
+
+**Services**
+
+Les services permettent de se connecter à l'API pour effectuer les opérations sur les ressources. Chaque fonction est simplement un wrapper autour de l'appel Ajax fourni par jQuery. Ce wrapper renvoie une promesse ; ce n'est pas strictement nécessaire puisque jQuery.ajax() peut être utilisé avec une syntaxe proche des promesses, mais cela permettrait de changer de librairie de requête sans modifier le reste du code (passer à l'API native `fetch()` par exemple).
+
+## Heroku
+
+Heroku est un hébergeur proposant du PaaS (Platform as a Service). Il est possible d'y déployer des applications, dans différents langages supportés : JS, PHP, Ruby, Go, Python... Nous utilisons ici l'offre gratuite, parfaitement adaptée à un Proof Of Concept. Le déploiement a été configuré pour un environnement NodeJS et PHP, ce qui permet à Heroku d'installer automatiquement les dépendances Composer et NPM. Ce déploiement est intégré à git, puisqu'il suffit de pousser sur la branche spéciale ajoutée lors de la création du projet sur Heroku (`git push heroku master`), et Heroku automatise le reste.
 
 ## Pistes d'amélioration
 
 * Utiliser des regex pour les routes, probablement plus maintenable que d'exploser la route dans un tableau et de vérifier à chaque étape si l'ID est un nombre
-* Créer des méthodes pour rendre le routeur plus propre. Par exemple, ne pas avoir une cascade de `switch/case` qui vérifient les méthodes, mais créer une classe `Router` qui a des méthodes `get()`, `post()`, `put()` et `delete()`, et qui vérifie quelle route match.
+* Créer des méthodes pour rendre le routeur plus propre. Par exemple, ne pas avoir une cascade de `switch/case` qui vérifient les méthodes, mais créer une classe `Router` qui a des méthodes `get()`, `post()`, `put()` et `delete()`, et qui vérifie quelle route match
 * Utiliser un micro-framework comme Zend Expressive (vidéo de présentation en français [ici](https://www.grafikart.fr/tutoriels/php/zend-expressive-905)), pour éviter de recoder ces éléments très classiques
-* Utiliser un framework pour le frontend. jQuery peut être utile pour des besoins simples (et encore, avec les avancées des navigateurs, et le travail de standardisation du W3C et de l'ECMAScript, beaucoup des choses qui nécessitaient autrefois jQuery peuvent être faites nativement (cf http://youmightnotneedjquery.com/), évitant ainsi de charger 90ko de JS tout en ayant de meilleurs performances => Ajax avec `fetch()`, sélection avec `document.getElementById()/document.querySelector()`), mais dès qu'une application devient un peu complexe le code ressemble à un plat de spaghetti, avec des événements bindés depuis un peu partout, et une impossibilité de séparer les fichiers proprement.
-* Mettre plus de PHPdoc et de JSdoc, pour aider le développeur à comprendre l'utilité des fonctions, et aider les IDE à proposer les bons types et les bonnes complétions
+* Utiliser un framework pour le frontend. jQuery peut être utile pour des besoins simples (et encore, avec les avancées des navigateurs, et le travail de standardisation du W3C et de l'ECMAScript, beaucoup des choses qui nécessitaient autrefois jQuery peuvent être faites nativement (cf http://youmightnotneedjquery.com/), évitant ainsi de charger 90ko de JS tout en ayant de meilleurs performances => Ajax avec `fetch()`, sélection avec `document.getElementById()/document.querySelector()`), mais dès qu'une application devient un peu complexe le code ressemble à un plat de spaghetti, avec des événements bindés depuis un peu partout, et une impossibilité de séparer les fichiers proprement
+* Rédiger plus de PHPdoc et de JSdoc, pour aider le développeur à comprendre l'utilité des fonctions, et aider les IDE à proposer les bons types et les bonnes complétions
 
 [Dotenv]: https://packagist.org/packages/vlucas/phpdotenv
 [phpcs]: https://packagist.org/packages/squizlabs/php_codesniffer
